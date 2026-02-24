@@ -3,7 +3,9 @@
 
 import Image from 'next/image'
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation'
+import { useContext } from 'react';
+import { DarkModeContext } from '../context/DarkModeContext';
 
 const iconsNav = [
     { name: 'Home', src: '/Home.svg', href: '/' },
@@ -13,6 +15,7 @@ const iconsNav = [
 
 export const Navbar = () => {
     const pathname = usePathname()
+    const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext)
 
     // const [isOpen, setIsOpen] = useState(false);
     // const [isDesktop, setIsDesktop] = useState(false)
@@ -39,8 +42,10 @@ export const Navbar = () => {
                     const isActive = icon.href === pathname
 
                     return (
-                        <li key={icon.name} className={`${isActive ? 'bg-navBarHover' : ''} cursor-pointer p-2 rounded-3xl lg:hover:bg-navBarHover transition-colors duration-200`}>
-                            <Link href={icon.href}>
+                        <li key={icon.name}>
+                            <Link className={`flex items-center justify-center p-2 rounded-3xl transition-colors duration-200 ${isActive ? 'bg-navBarHover' : ''
+                                } lg:hover:bg-navBarHover`}
+                                href={icon.href}>
                                 <Image src={icon.src} alt={`botón de ${icon.name}`} width={32} height={32} />
                             </Link>
                         </li>
@@ -52,8 +57,8 @@ export const Navbar = () => {
                 <li>
                     <Image className='cursor-pointer transform lg:hover:rotate-12 transition duration-100' src={'/Help.svg'} alt='botón de Ajustes' width={32} height={32} />
                 </li>
-                <li>
-                    <Image className='cursor-pointer transform lg:hover:rotate-45 transition duration-100' src={'/Sun.svg'} alt='botón de modo claro' width={32} height={32} />
+                <li onClick={toggleDarkMode}>
+                    <Image className='cursor-pointer transform lg:hover:rotate-12 transition duration-100' src={`${isDarkMode ? '/Moon.svg' : '/Sun.svg'}`} alt='botón de modo claro' width={32} height={32} />
                 </li>
             </ul>
         </nav >

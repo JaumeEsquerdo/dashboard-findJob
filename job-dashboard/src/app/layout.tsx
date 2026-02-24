@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Ubuntu, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "../components/Navbar";
+import { DarkModeProvider } from "../context/DarkModeContext";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -30,8 +31,10 @@ export default function RootLayout({
       <body
         className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
-        <Navbar />
-        {children}
+        <DarkModeProvider>
+          <Navbar />
+          {children}
+        </DarkModeProvider>
       </body>
     </html>
   );

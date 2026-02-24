@@ -1,21 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --preview-color: #7163ba;
-  /* --preview-fondoColor: #f2efff; */
-  --preview-coloropacidad: #fffbfb55;
-}
-
-@theme {
   --color-background: #f8f6ff;
+  --color-textColor: #333333;
   --color-foreground: #171717;
   --color-main: #7163ba;
   --color-fondoColor: #f2efff;
   --color-navBarHover: #fffbfb55;
+}
+
+.dark {
+  --color-background: #1e1e2f; /* azul muy oscuro */
+  --color-textColor: #e0e0e0; /* gris claro suave */
+  --color-foreground: #2c2c3c; /* elementos destacados */
+  --color-main: #7163ba;
+  --color-fondoColor: #292836; /* fondo de secciones secundarias */
+  --color-navBarHover: #44446655; /* hover sutil */
+}
+
+@theme {
+  --color-background: var(--color-background);
+  --color-textColor: var(--color-textColor);
+  --color-foreground: var(--color-foreground);
+  --color-main: var(--color-main);
+  --color-fondoColor: var(--color-fondoColor);
+  --color-navBarHover: var(--color-navBarHover);
 
   --font-sans: var(--font-ubuntu), sans-serif;
   --font-mono: var(--font-fira-code), monospace;
 }
+
 html,
 body,
 #__next {

@@ -10,7 +10,7 @@ export default function Home() {
     <div className="flex flex-1 flex-col h-full  lg:flex-row gap-6">
 
       <main className="flex-1 bg-fondoColor p-4 rounded-2xl">
-        <h2 className="font-medium text-4xl">Dashboard</h2>
+        <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
         <div onClick={() => setSidebarOpen(!sidebarOpen)}>open sidebar</div>
         {sidebarOpen && <p>open</p>}
       </main>
