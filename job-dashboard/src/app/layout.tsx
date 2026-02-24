@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${ubuntu.variable} ${firaCode.variable} font-sans antialiased`}
+        className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
         <Navbar />
         {children}

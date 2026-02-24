@@ -1,14 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-
-  --font-sans: var(--font-ubuntu);
-  --font-mono: var(--font-fira-code);
+  --preview-color: #7163ba;
+  /* --preview-fondoColor: #f2efff; */
+  --preview-coloropacidad: #fffbfb55;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@theme {
+  --color-background: #f8f6ff;
+  --color-foreground: #171717;
+  --color-main: #7163ba;
+  --color-fondoColor: #f2efff;
+  --color-navBarHover: #fffbfb55;
+
+  --font-sans: var(--font-ubuntu), sans-serif;
+  --font-mono: var(--font-fira-code), monospace;
+}
+html,
+body,
+#__next {
+  height: 100%;
 }
