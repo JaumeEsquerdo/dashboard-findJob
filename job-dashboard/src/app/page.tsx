@@ -7,6 +7,8 @@ import { Button } from "../components/Button";
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en localStorage. */
   const [isOnboardingVisible, setIsOnboardingVisible] = useState(() => {
     if (typeof window === "undefined") return true;
     return !localStorage.getItem("onboardingSeenN");
