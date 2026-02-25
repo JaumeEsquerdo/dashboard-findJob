@@ -16,7 +16,7 @@ export const Sidebar = ({ sidebarOpen, setOpen }: sidebarProps) => {
             )}
             <aside
                 className={`
-        fixed top-0 right-0 h-full w-64 bg-white z-50 p-6 rounded-tl-2xl rounded-bl-2xl lg:rounded-2xl flex flex-col justify-evenly
+        fixed top-0 right-0 h-full w-64 bg-white z-50 p-6 rounded-tl-2xl rounded-bl-2xl lg:rounded-2xl flex flex-col justify-start items-center gap-80 pt-30
         transform transition-transform duration-300
         ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}
         lg:static lg:translate-x-0 lg:h-auto
