@@ -48,12 +48,28 @@ export default function Home() {
         )}
 
 
-        <div onClick={() => setSidebarOpen(!sidebarOpen)}>open sidebar</div>
-        {sidebarOpen && <p>open</p>}
-        <label>
-          <input className="p-3 rounded-2xl bg-whiteSpecial outline-1 focus:outline-main active:outline-main active:outline-2 focus:outline-2" type="search" placeholder="Buscador" />
+        {/* <div onClick={() => setSidebarOpen(!sidebarOpen)}>open sidebar</div>
+        {sidebarOpen && <p>open</p>} */}
+
+        <label className="relative block w-full lg:w-1/2 mt-8">
+          <input
+            className="p-3 rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] focus:outline-2 transition duration-100 " type="text" placeholder="Busca para consultar con precisión" />
+          <span className="absolute cursor-pointer bg-background rounded-2xl p-1.5 right-4 top-1/2 -translate-y-1/2 text-main">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </span>
         </label>
+
       </main>
+
       <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} />
     </div>
   );

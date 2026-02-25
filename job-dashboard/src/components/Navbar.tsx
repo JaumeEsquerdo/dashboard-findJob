@@ -53,7 +53,7 @@ export const Navbar = () => {
                     )
                 })}
             </ul>
-            <ul className='flex gap-1 fixed bottom-6 right-4 bg-main p-2 rounded-xl shadow-lg lg:flex col lg:relative lg:shadow-none lg:right-auto lg:bottom-auto lg:gap-2'>
+            <ul className='flex gap-1 fixed bottom-6 right-4 bg-main p-2 z-20 rounded-xl shadow-lg lg:flex col lg:relative lg:shadow-none lg:right-auto lg:bottom-auto lg:gap-2'>
                 <li>
                     <Image className='cursor-pointer transform lg:hover:rotate-12 transition duration-100' src={'/Help.svg'} alt='botón de Ajustes' width={32} height={32} />
                 </li>

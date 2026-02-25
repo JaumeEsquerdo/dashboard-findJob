@@ -11,12 +11,12 @@
 }
 
 .dark {
-  --color-background: #1e1e2f; /* azul muy oscuro */
+  --color-background: #626267; /* azul muy oscuro */
   --color-textColor: #e0e0e0; /* gris claro suave */
-  --color-foreground: #2c2c3c; /* elementos destacados */
+  --color-foreground: #393943; /* elementos destacados */
   --color-main: #7163ba;
-  --color-fondoColor: #292836; /* fondo de secciones secundarias */
-  --color-navBarHover: #44446655; /* hover sutil */
+  --color-fondoColor: #646082; /* fondo de secciones secundarias */
+  --color-navBarHover: #4a4a5755; /* hover sutil */
 }
 
 @theme {
