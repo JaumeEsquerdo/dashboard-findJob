@@ -7,6 +7,7 @@
   --color-main: #7163ba;
   --color-fondoColor: #f2efff;
   --color-navBarHover: #fffbfb55;
+  --color-whiteSpecial: #fdf9fd;
 }
 
 .dark {
@@ -25,6 +26,7 @@
   --color-main: var(--color-main);
   --color-fondoColor: var(--color-fondoColor);
   --color-navBarHover: var(--color-navBarHover);
+  --color-whiteSpecial: var(--color-whiteSpecial);
 
   --font-sans: var(--font-ubuntu), sans-serif;
   --font-mono: var(--font-fira-code), monospace;
