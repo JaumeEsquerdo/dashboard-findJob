@@ -1,0 +1,52 @@
+{
+  "jobs": [
+    {
+      "id": "job_001",
+      "title": "Frontend Developer (React)",
+      "company": "TechFlow",
+      "location": "Madrid, Spain",
+      "remote": true,
+      "employment_type": "Full-time",
+      "experience_level": "Mid-level",
+      "salary_min": 35000,
+      "salary_max": 45000,
+      "currency": "EUR",
+      "tags": ["React", "JavaScript", "CSS", "Frontend"],
+      "posted_at": "2025-03-15",
+      "description": "We are looking for a React developer...",
+      "url": "https://empllo.com/jobs/job_001"
+    },
+    {
+      "id": "job_002",
+      "title": "Junior Frontend Developer",
+      "company": "StartupLab",
+      "location": "Barcelona, Spain",
+      "remote": false,
+      "employment_type": "Full-time",
+      "experience_level": "Junior",
+      "salary_min": 24000,
+      "salary_max": 30000,
+      "currency": "EUR",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "posted_at": "2025-03-20",
+      "description": "Entry level frontend position...",
+      "url": "https://empllo.com/jobs/job_002"
+    },
+    {
+      "id": "job_003",
+      "title": "Senior React Engineer",
+      "company": "GlobalSoft",
+      "location": "Remote",
+      "remote": true,
+      "employment_type": "Contract",
+      "experience_level": "Senior",
+      "salary_min": 60000,
+      "salary_max": 75000,
+      "currency": "EUR",
+      "tags": ["React", "TypeScript", "Node.js"],
+      "posted_at": "2025-03-10",
+      "description": "Senior React role with leadership responsibilities...",
+      "url": "https://empllo.com/jobs/job_003"
+    }
+  ]
+}
