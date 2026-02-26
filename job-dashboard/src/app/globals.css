@@ -7,16 +7,17 @@
   --color-main: #7163ba;
   --color-fondoColor: #f2efff;
   --color-navBarHover: #fffbfb55;
-  --color-whiteSpecial: #fdf9fd;
+  --color-whiteSpecial: #ffffff;
 }
 
 .dark {
   --color-background: #626267; /* azul muy oscuro */
-  --color-textColor: #e0e0e0; /* gris claro suave */
+  --color-textColor: #676767; /* gris claro suave */
   --color-foreground: #393943; /* elementos destacados */
   --color-main: #7163ba;
   --color-fondoColor: #646082; /* fondo de secciones secundarias */
   --color-navBarHover: #4a4a5755; /* hover sutil */
+  --color-whiteSpecial: #f9f9f9;
 }
 
 @theme {

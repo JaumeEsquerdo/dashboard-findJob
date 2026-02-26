@@ -109,7 +109,7 @@ export default function Home() {
           <div className="flex gap-4 items-center justify-center w-full">
             <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
               <select className="p-2 pr-4 cursor-pointer rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
-                <option value="">Experiencia</option>
+                <option value="" >Experiencia</option>
                 <option value="Junior">Junior</option>
                 <option value="Mid-level">Mid-level</option>
                 <option value="Senior">Senior</option>
