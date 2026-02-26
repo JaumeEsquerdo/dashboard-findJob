@@ -154,15 +154,15 @@ export default function Home() {
         {/* tabla de render de jobs */}
         <div className="overflow-x-auto">
           <p>Hay {filteredJobs.length} resultados</p>
-          <table className="min-w-full bg-white runded-2xl shadow-md">
-            <thead className="bg-gray-50 text-left">
-              <tr>
-                <th className="p-4">Título</th>
+          <table className="min-w-full bg-white rounded-2xl">
+            <thead className="bg-gray-50 text-left ">
+              <tr >
+                <th className="p-4 rounded-2xl ">Título</th>
                 <th className="p-4">Compañia</th>
                 <th className="p-4">Localización</th>
                 <th className="p-4">Nivel</th>
                 <th className="p-4">Remoto</th>
-                <th className="p-4">Salario</th>
+                <th className="p-4 rounded-2xl">Salario</th>
               </tr>
             </thead>
 
@@ -171,7 +171,7 @@ export default function Home() {
                 <tr key={job.id} onClick={() => {
                   setSelectedJob(job)
                   setSidebarOpen(true)
-                }} className="border-t cursor-pointer lg:hover:bg-amber-200">
+                }} className="border-t cursor-pointer lg:hover:bg-fondoColor">
                   <td className="p-4 font-medium">{job.title}</td>
                   <td className="p-4">{job.company}</td>
                   <td className="p-4">{job.location}</td>

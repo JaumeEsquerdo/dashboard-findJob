@@ -48,11 +48,14 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                 )}
 
                 {job && (
-                    <div>
-                        <h2>{job.title}</h2>
-                        <p>{job.company}</p>
-                        <p>{job.location}</p>
-                        <p>{job.description}</p>
+                    <div className="flex flex-col gap-8 mt-12">
+                        <h2 className="font-medium text-xl text-center">{job.title}</h2>
+                        <p><span className="font-medium">Compañia:</span> {job.company}</p>
+                        <p><span className="font-medium">Localización:</span> {job.location}</p>
+                        <p><span className="font-medium">Descripción del puesto:</span> {job.description}</p>
+                        <p><span className="font-medium">Herramientas:</span> {job.tags.join(', ')}</p>
+                        <p><span className="font-medium">Salario:</span> {job.salary_min} {job.salary_max ? `- ${job.salary_max}` : ''} {job.currency}</p>
+                        <p><span className="font-medium">Para postularte:</span> <span className="text-main">{job.url}</span></p>
                     </div>
                 )}
 
