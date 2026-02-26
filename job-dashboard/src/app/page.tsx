@@ -3,12 +3,13 @@ import Image from "next/image";
 import { useState, useMemo } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
-
+import { type Job } from "./types/types";
 import dataJobs from '../data/jobs.json'
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [jobs, setJobs] = useState(dataJobs.jobs)
+  const [jobs, setJobs] = useState<Job[]>(dataJobs.jobs)
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null)
   const [filters, setFilters] = useState({
     search: '',
     experience: '',
@@ -74,21 +75,23 @@ export default function Home() {
             <Image className="lg:absolute lg:top-20 lg:right-4 xl:-top-14 xl:right-8
               -translate-y-4 lg:-translate-y-12
               lg:w-70
-               xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" width={200} height={300} />
+              xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" width={200} height={300} />
 
           </div>
 
         )}
 
-
         {/* <div onClick={() => setSidebarOpen(!sidebarOpen)}>open sidebar</div>
         {sidebarOpen && <p>open</p>} */}
-        <div className="flex flex-col lg:flex-row">
-          <label className="relative block w-full lg:w-1/2 mt-8">
+
+        {/* FILTROS */}
+        <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
+          {/* input search */}
+          <label className="relative block w-full">
             <input
               value={filters.search}
               onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-              className="p-3 rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] focus:outline-2 transition duration-100 " type="text" placeholder="Busca para consultar con precisión" />
+              className="p-3 rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 " type="text" placeholder="Busca para consultar con precisión" />
             <span className="absolute cursor-pointer bg-background rounded-2xl p-1.5 right-4 top-1/2 -translate-y-1/2 text-main">
               <svg
                 className="w-6 h-6"
@@ -102,22 +105,50 @@ export default function Home() {
               </svg>
             </span>
           </label>
-          <select value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
-            <option value="">Nivel</option>
-            <option value="Junior">Junior</option>
-            <option value="Mid-level">Mid-level</option>
-            <option value="Senior">Senior</option>
-          </select>
-          <select value={filters.location} onChange={(e) => setFilters({
-            ...filters, location: e.target.value
-          })}>
-            <option value="">Localización</option>
-            {uniqueLocations.map((loc) => (
-              <option key={loc} value={loc}>
-                {loc}
-              </option>
-            ))}
-          </select>
+          {/* filtros selects */}
+          <div className="flex gap-4 items-center justify-center w-full">
+            <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
+              <select className="p-2 pr-4 cursor-pointer rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
+                <option value="">Experiencia</option>
+                <option value="Junior">Junior</option>
+                <option value="Mid-level">Mid-level</option>
+                <option value="Senior">Senior</option>
+              </select>
+              <svg
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </label>
+
+
+            <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
+              <select className="p-2 pr-4 cursor-pointer rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.location} onChange={(e) => setFilters({
+                ...filters, location: e.target.value
+              })}>
+                <option value="">Localización</option>
+                {uniqueLocations.map((loc) => (
+                  <option key={loc} value={loc}>
+                    {loc}
+                  </option>
+                ))}
+              </select>
+              <svg
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </label>
+
+          </div>
         </div>
 
         {/* tabla de render de jobs */}
@@ -137,7 +168,10 @@ export default function Home() {
 
             <tbody>
               {filteredJobs && filteredJobs.map((job) => (
-                <tr key={job.id} className="border-t">
+                <tr key={job.id} onClick={() => {
+                  setSelectedJob(job)
+                  setSidebarOpen(true)
+                }} className="border-t cursor-pointer lg:hover:bg-amber-200">
                   <td className="p-4 font-medium">{job.title}</td>
                   <td className="p-4">{job.company}</td>
                   <td className="p-4">{job.location}</td>
@@ -161,9 +195,9 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-      </main>
+      </main >
 
-      <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} />
-    </div>
+      <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} job={selectedJob} />
+    </div >
   );
 }

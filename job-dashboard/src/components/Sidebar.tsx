@@ -1,10 +1,13 @@
+import { type Job } from "../app/types/types"
+
 interface sidebarProps {
     sidebarOpen: boolean
     setOpen: (value: boolean) => void
+    job: Job | null
 }
 
 
-export const Sidebar = ({ sidebarOpen, setOpen }: sidebarProps) => {
+export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
     return (
         <>
             {/* overlay clicable para cerrar sidebar */}
@@ -31,14 +34,27 @@ export const Sidebar = ({ sidebarOpen, setOpen }: sidebarProps) => {
                 </button>
 
                 {/* Contenido del sidebar */}
-                <header className="flex flex-col items-center gap-2 mt-24">
-                    <h3 className="font-medium text-xl">Detalles del trabajo</h3>
-                    <p className="text-center">Clica algún trabajo para ver los detalles</p>
-                </header>
-                <section className="flex flex-col gap-2 items-center mt-auto mb-20">
-                    <p>¿No sabes cómo empezar?</p>
-                    <p>Te guiamos nosotros</p>
-                </section>
+                {!job && (
+                    <>
+                        <header className="flex flex-col items-center gap-2 mt-24">
+                            <h3 className="font-medium text-xl">Detalles del trabajo</h3>
+                            <p className="text-center">Clica algún trabajo para ver los detalles</p>
+                        </header>
+                        <section className="flex flex-col gap-2 items-center mt-auto mb-20">
+                            <p>¿No sabes cómo empezar?</p>
+                            <p>Te guiamos nosotros</p>
+                        </section>
+                    </>
+                )}
+
+                {job && (
+                    <div>
+                        <h2>{job.title}</h2>
+                        <p>{job.company}</p>
+                        <p>{job.location}</p>
+                        <p>{job.description}</p>
+                    </div>
+                )}
 
             </aside>
         </>
