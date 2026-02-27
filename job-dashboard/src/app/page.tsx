@@ -50,15 +50,37 @@ export default function Home() {
 
   }, [jobs, filters.experience, filters.location, filters.search])
 
+  /* KPIS */
+
+  /* empleos totales filtrados */
+  const totalJobs = filteredJobs.length
+
+  /* porcentajos de trabajos remotos filtrados */
+  const remoteJobs = filteredJobs.filter(job => job.remote).length
+  const remotePercentage = totalJobs === 0 ? 0 : Math.round((remoteJobs / totalJobs) * 100)
+
+  /* salario medio */
+  const avgSalary =
+    totalJobs === 0 ?
+      0 : Math.round(filteredJobs.reduce((acc, job) => acc + job.salary_min, 0) / totalJobs)
+
+  /* cuantos trabajos por seniority */
+  const seniorityCount = filteredJobs.reduce((acc, job) => {
+    /* acc[job.experience_level] - para cada tipo */
+    // Si el nivel ya existe en el acumulador, suma 1.
+    // Si no existe, lo inicializa en 0 y luego suma 1.
+    acc[job.experience_level] = (acc[job.experience_level] || 0) + 1
+    return acc
+  },
+    {} as Record<string, number> //el inicio es un objeto vacio que tendrá claves tipo string y valores tipo number
+  )
 
   return (
-    <div className="flex flex-1 flex-col h-full  lg:flex-row gap-6">
+    <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6">
 
-      <main className="flex flex-col flex-1 bg-fondoColor p-4 rounded-2xl gap-4">
+      <main className="flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden">
         <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
-
           <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
-
         </header>
 
         {/* onboarding */}
@@ -78,11 +100,7 @@ export default function Home() {
               xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" width={200} height={300} />
 
           </div>
-
         )}
-
-        {/* <div onClick={() => setSidebarOpen(!sidebarOpen)}>open sidebar</div>
-        {sidebarOpen && <p>open</p>} */}
 
         {/* FILTROS */}
         <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
@@ -151,18 +169,45 @@ export default function Home() {
           </div>
         </div>
 
+        {/* KPIS render */}
+
+        <div className="grid grid-cols-1 grid- md:grid-cols-3 gap-6 mt-8">
+          {/* trabajos totales */}
+          <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
+            <div className="flex flex-col justify-between">
+              <p className="text-sm text-gray-600">Trabajos totales</p>
+              <h3 className="text-3xl font-semibold text-textColor mt-2">{totalJobs}</h3>
+            </div>
+            <Image src="/icono-trabajos.svg" alt="icono búsqueda trabajo" width={80} height={80} />
+          </div>
+          <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
+            <div className="flex flex-col justify-between">
+              <p className="text-sm text-gray-600">Porcentaje trabajos remotos</p>
+              <h3 className="text-3xl font-semibold text-textColor mt-2">{remotePercentage}%</h3>
+            </div>
+            <Image src="/icono-remoto.svg" alt="icono búsqueda trabajo" width={80} height={80} />
+          </div>
+          <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
+            <div className="flex flex-col justify-between">
+              <p className="text-sm text-gray-600">Salario medio</p>
+              <h3 className="text-3xl font-semibold text-textColor mt-2">{avgSalary.toLocaleString()}€</h3>
+            </div>
+            <Image src="/icono-salario.svg" alt="icono búsqueda trabajo" width={80} height={80} />
+          </div>
+
+        </div>
+
         {/* tabla de render de jobs */}
-        <div className="overflow-x-auto">
-          <p>Hay {filteredJobs.length} resultados</p>
+        <div className="overflow-x-auto min-h-fit mt-4 rounded-2xl bg-white">
           <table className="min-w-full bg-white rounded-2xl">
-            <thead className="bg-gray-50 text-left ">
+            <thead className="bg-gray-100 text-left ">
               <tr >
-                <th className="p-4 rounded-2xl ">Título</th>
+                <th className="p-4 rounded-tl-2xl ">Título</th>
                 <th className="p-4">Compañia</th>
                 <th className="p-4">Localización</th>
                 <th className="p-4">Nivel</th>
                 <th className="p-4">Remoto</th>
-                <th className="p-4 rounded-2xl">Salario</th>
+                <th className="p-4 rounded-tr-2xl">Salario</th>
               </tr>
             </thead>
 
@@ -171,7 +216,7 @@ export default function Home() {
                 <tr key={job.id} onClick={() => {
                   setSelectedJob(job)
                   setSidebarOpen(true)
-                }} className="border-t cursor-pointer lg:hover:bg-fondoColor">
+                }} className={`border-t border-gray-300 cursor-pointer transition duration-200 ${job === selectedJob ? 'bg-main text-whiteSpecial' : 'lg:hover:bg-fondoColor'}`}>
                   <td className="p-4 font-medium">{job.title}</td>
                   <td className="p-4">{job.company}</td>
                   <td className="p-4">{job.location}</td>
@@ -195,6 +240,10 @@ export default function Home() {
             </tbody>
           </table>
         </div>
+
+
+
+
       </main >
 
       <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} job={selectedJob} />

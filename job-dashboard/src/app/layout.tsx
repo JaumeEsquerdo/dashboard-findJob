@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col gap-6 bg-background font-sans antialiased lg:flex-row`}
+        className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col h-screen overflow-auto gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
         <DarkModeProvider>
           <Navbar />

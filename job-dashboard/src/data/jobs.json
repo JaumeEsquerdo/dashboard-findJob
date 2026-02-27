@@ -47,6 +47,22 @@
       "posted_at": "2025-03-10",
       "description": "Senior React role with leadership responsibilities...",
       "url": "https://empllo.com/jobs/job_003"
+    },
+    {
+      "id": "job_004",
+      "title": "Junior React Engineer",
+      "company": "GlobalSoft",
+      "location": "Remote",
+      "remote": true,
+      "employment_type": "Contract",
+      "experience_level": "junior",
+      "salary_min": 20000,
+      "salary_max": 25000,
+      "currency": "EUR",
+      "tags": ["React", "TypeScript", "Node.js"],
+      "posted_at": "2025-03-10",
+      "description": "Senior React role with leadership responsibilities...",
+      "url": "https://empllo.com/jobs/job_003"
     }
   ]
 }

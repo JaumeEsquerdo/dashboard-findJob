@@ -38,3 +38,12 @@ body,
 #__next {
   height: 100%;
 }
+
+/* ocultar barra de scroll */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE y Edge */
+  scrollbar-width: none; /* Firefox */
+}
