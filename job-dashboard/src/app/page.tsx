@@ -5,6 +5,15 @@ import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
 import { type Job } from "./types/types";
 import dataJobs from '../data/jobs.json'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts"
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -75,6 +84,13 @@ export default function Home() {
     {} as Record<string, number> //el inicio es un objeto vacio que tendrá claves tipo string y valores tipo number
   )
 
+  const seniorityData = Object.entries(seniorityCount).map(
+    ([level, count]) => ({
+      level,
+      count,
+    })
+  )
+
   return (
     <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6">
 
@@ -126,7 +142,7 @@ export default function Home() {
           {/* filtros selects */}
           <div className="flex gap-4 items-center justify-center w-full">
             <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
-              <select className="p-2 pr-4 cursor-pointer rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
+              <select className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
                 <option value="" >Experiencia</option>
                 <option value="Junior">Junior</option>
                 <option value="Mid-level">Mid-level</option>
@@ -145,7 +161,7 @@ export default function Home() {
 
 
             <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
-              <select className="p-2 pr-4 cursor-pointer rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.location} onChange={(e) => setFilters({
+              <select className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.location} onChange={(e) => setFilters({
                 ...filters, location: e.target.value
               })}>
                 <option value="">Localización</option>
@@ -197,10 +213,22 @@ export default function Home() {
 
         </div>
 
+        <div className="bg-white rounded-2xl p-4 w-auto min-h-3/12">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={seniorityData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="level" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
         {/* tabla de render de jobs */}
-        <div className="overflow-x-auto min-h-fit mt-4 rounded-2xl bg-white">
+        <div className="overflow-x-auto min-h-fit mt-4 rounded-2xl bg-white shadow-[0_0_0_2px_var(--color-main)]">
           <table className="min-w-full bg-white rounded-2xl">
-            <thead className="bg-gray-100 text-left ">
+            <thead className="bg-background text-left ">
               <tr >
                 <th className="p-4 rounded-tl-2xl ">Título</th>
                 <th className="p-4">Compañia</th>

@@ -59,7 +59,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                             <p><span className="font-medium">Herramientas:</span> {job.tags.join(', ')}</p>
                             <p><span className="font-medium">Salario:</span> {job.salary_min} {job.salary_max ? `- ${job.salary_max}` : ''} {job.currency}</p>
                             <p><span className="font-medium">Publicado el:</span> {job.posted_at.split('-').reverse().join('-')}</p>
-                            <p><span className="font-medium">Para postularte:</span> <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-main">{job.url}</a></p>
+                            <p><span className="font-medium">Para postularte:</span> <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-main lg:hover:text-foreground lg:hover:underline transition duration-200">{job.url}</a></p>
                         </div>
                     </div>
                 )}
