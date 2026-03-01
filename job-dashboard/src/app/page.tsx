@@ -13,7 +13,12 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
 } from "recharts"
+
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -90,6 +95,18 @@ export default function Home() {
       count,
     })
   )
+
+  /* trabajos remotos vs resto */
+  const remoteData = [
+    {
+      name: "Remote",
+      value: filteredJobs.filter(job => job.remote).length,
+    },
+    {
+      name: "Onsite",
+      value: filteredJobs.filter(job => !job.remote).length,
+    },
+  ]
 
   return (
     <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6">
@@ -213,15 +230,34 @@ export default function Home() {
 
         </div>
 
-        <div className="bg-white rounded-2xl p-4 w-auto min-h-3/12">
+        <div className="bg-white rounded-2xl p-4 w-auto min-h-3/12 flex justify-center items-center">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={seniorityData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="level" />
-              <YAxis />
+              <YAxis width={20} />
               <Tooltip />
-              <Bar dataKey="count" />
+              <Bar fill='#7163ba' dataKey="count" />
             </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-white rounded-2xl w-auto min-h-5/12 h-full flex justify-center items-center">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                fill='#7163ba'
+                data={remoteData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                label
+              />
+              <Tooltip />
+              <Legend />
+            </PieChart>
           </ResponsiveContainer>
         </div>
 
