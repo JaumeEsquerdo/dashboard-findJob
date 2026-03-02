@@ -3,6 +3,7 @@
 :root {
   --color-background: #f8f6ff;
   --color-textColor: #333333;
+  --color-textSecColor: #666666;
   --color-foreground: #171717;
   --color-main: #7163ba;
   --color-fondoColor: #f2efff;
@@ -11,18 +12,20 @@
 }
 
 .dark {
-  --color-background: #626267; /* azul muy oscuro */
-  --color-textColor: #dfdada; /* gris claro suave */
+  --color-background: #b0b0b5;
+  /* --color-textColor: #424242; */
+  --color-textSecColor: #666666;
   --color-foreground: #393943; /* elementos destacados */
   --color-main: #7163ba;
-  --color-fondoColor: #646082; /* fondo de secciones secundarias */
+  --color-fondoColor: #9f9ac0; /* fondo de secciones secundarias */
   --color-navBarHover: #4a4a5755; /* hover sutil */
-  --color-whiteSpecial: #f9f9f9;
+  --color-whiteSpecial: #ececec;
 }
 
 @theme {
   --color-background: var(--color-background);
   --color-textColor: var(--color-textColor);
+  --color-textSecColor: var(--color-textSecColor);
   --color-foreground: var(--color-foreground);
   --color-main: var(--color-main);
   --color-fondoColor: var(--color-fondoColor);

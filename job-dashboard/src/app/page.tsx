@@ -97,7 +97,6 @@ export default function Home() {
               -translate-y-4 lg:-translate-y-12
               lg:w-70
               xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" width={200} height={300} />
-
           </div>
         )}
 
