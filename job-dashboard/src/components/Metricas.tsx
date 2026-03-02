@@ -127,7 +127,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
                                 <BarChart data={seniorityData}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="level" />
-                                    <YAxis width={28} />
+                                    <YAxis width={32} />
                                     <Tooltip contentStyle={{
                                         borderRadius: "12px",
                                     }} />
@@ -157,9 +157,9 @@ export const Metricas = ({ filteredJobs }: Props) => {
                                     dataKey="value"
                                     nameKey="name"
                                     cx="50%"
-                                    cy="50%"
-                                    outerRadius={100}
-                                    label
+                                    cy="55%"
+                                    outerRadius='80%'
+                                    label={false}
                                     shape={(props) => {
                                         const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, index } = props
                                         return (
