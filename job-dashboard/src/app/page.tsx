@@ -6,6 +6,8 @@ import { Button } from "../components/Button";
 import { type Job } from "./types/types";
 import dataJobs from '../data/jobs.json'
 import { Metricas } from "../components/Metricas";
+import { Kpis } from "../components/Kpis";
+import { RenderJobs } from "../components/RenderJobs";
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -166,78 +168,13 @@ export default function Home() {
 
         {/* KPIS render */}
 
-        <div className="grid grid-cols-1 grid- md:grid-cols-3 gap-6 mt-8">
-          {/* trabajos totales */}
-          <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
-            <div className="flex flex-col justify-between">
-              <p className="text-sm text-gray-600">Trabajos totales</p>
-              <h3 className="text-3xl font-semibold text-textColor mt-2">{totalJobs}</h3>
-            </div>
-            <Image src="/icono-trabajos.svg" alt="icono búsqueda trabajo" width={80} height={80} />
-          </div>
-          <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
-            <div className="flex flex-col justify-between">
-              <p className="text-sm text-gray-600">Porcentaje trabajos remotos</p>
-              <h3 className="text-3xl font-semibold text-textColor mt-2">{remotePercentage}%</h3>
-            </div>
-            <Image src="/icono-remoto.svg" alt="icono búsqueda trabajo" width={80} height={80} />
-          </div>
-          <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
-            <div className="flex flex-col justify-between">
-              <p className="text-sm text-gray-600">Salario medio</p>
-              <h3 className="text-3xl font-semibold text-textColor mt-2">{avgSalary.toLocaleString()}€</h3>
-            </div>
-            <Image src="/icono-salario.svg" alt="icono búsqueda trabajo" width={80} height={80} />
-          </div>
-
-        </div>
+        <Kpis avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
 
         {/* MÉTRICAS */}
         <Metricas filteredJobs={filteredJobs} />
 
-        {/* tabla de render de jobs */}
-        <div className="overflow-x-auto min-h-fit mt-4 rounded-2xl bg-white shadow-[0_0_0_2px_var(--color-main)]">
-          <table className="min-w-full bg-white rounded-2xl">
-            <thead className="bg-background text-left ">
-              <tr >
-                <th className="p-4 rounded-tl-2xl ">Título</th>
-                <th className="p-4">Compañia</th>
-                <th className="p-4">Localización</th>
-                <th className="p-4">Nivel</th>
-                <th className="p-4">Remoto</th>
-                <th className="p-4 rounded-tr-2xl">Salario</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredJobs && filteredJobs.map((job) => (
-                <tr key={job.id} onClick={() => {
-                  setSelectedJob(job)
-                  setSidebarOpen(true)
-                }} className={`border-t border-gray-300 cursor-pointer transition duration-200 ${job === selectedJob ? 'bg-main text-whiteSpecial' : 'lg:hover:bg-fondoColor'}`}>
-                  <td className="p-4 font-medium">{job.title}</td>
-                  <td className="p-4">{job.company}</td>
-                  <td className="p-4">{job.location}</td>
-                  <td className="p-4">{job.experience_level}</td>
-                  <td className="p-4">
-                    {job.remote ? 'Si' : 'No'}
-                  </td>
-                  <td className="p-4">
-                    {job.salary_min} - {job.salary_max} {job.currency}
-                  </td>
-                </tr>
-              ))}
-
-              {filteredJobs.length === 0 && (
-                <tr>
-                  <td className="p-6 text-center text-gray-500">
-                    No se han encontrado resultados
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        {/* TABLA de RENDER JOBS */}
+        <RenderJobs filteredJobs={filteredJobs} setSelectedJob={setSelectedJob} setSidebarOpen={setSidebarOpen} selectedJob={selectedJob} />
 
 
 

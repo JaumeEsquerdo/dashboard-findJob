@@ -20,7 +20,7 @@ type Props = {
 }
 
 export const Metricas = ({ filteredJobs }: Props) => {
-    const COLORS = ["#826DC7", "#E1D7FF", "#BAA6FF"]
+    const COLORS = ["#E1D7FF", "#BAA6FF", "#826DC7"]
     const seniorityOrder: Seniority[] = ["Junior", "Mid-level", "Senior"]
 
 
@@ -46,11 +46,11 @@ export const Metricas = ({ filteredJobs }: Props) => {
     /* trabajos remotos vs resto */
     const remoteData = [
         {
-            name: "Remote",
+            name: "Remoto",
             value: filteredJobs.filter(job => job.remote).length,
         },
         {
-            name: "Onsite",
+            name: "In situ",
             value: filteredJobs.filter(job => !job.remote).length,
         },
     ]

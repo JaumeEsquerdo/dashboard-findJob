@@ -12,7 +12,7 @@
 
 .dark {
   --color-background: #626267; /* azul muy oscuro */
-  --color-textColor: #676767; /* gris claro suave */
+  --color-textColor: #dfdada; /* gris claro suave */
   --color-foreground: #393943; /* elementos destacados */
   --color-main: #7163ba;
   --color-fondoColor: #646082; /* fondo de secciones secundarias */
