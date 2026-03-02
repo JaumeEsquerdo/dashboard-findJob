@@ -191,7 +191,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
                             <Line
                                 type="monotone"
                                 dataKey="averageSalary"
-                                stroke="#6366f1"
+                                stroke="#7163ba"
                                 strokeWidth={3}
                             />
                         </LineChart>
