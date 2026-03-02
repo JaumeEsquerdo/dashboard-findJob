@@ -16,3 +16,10 @@ export type Job = {
 }
 
 export type Seniority = "Junior" | "Mid-level" | "Senior"
+
+
+export type Filters = {
+    search: string
+    experience: string
+    location: string
+}
