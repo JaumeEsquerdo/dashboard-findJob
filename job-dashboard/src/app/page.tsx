@@ -3,24 +3,9 @@ import Image from "next/image";
 import { useState, useMemo } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
-import { type Job, type Seniority } from "./types/types";
+import { type Job } from "./types/types";
 import dataJobs from '../data/jobs.json'
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  LineChart, Line,
-  Legend,
-} from "recharts"
-
-
-
+import { Metricas } from "../components/Metricas";
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -32,6 +17,8 @@ export default function Home() {
     location: '',
   })
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
+
+
 
   /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en localStorage. */
   const [isOnboardingVisible, setIsOnboardingVisible] = useState(() => {
@@ -80,94 +67,8 @@ export default function Home() {
     totalJobs === 0 ?
       0 : Math.round(filteredJobs.reduce((acc, job) => acc + job.salary_min, 0) / totalJobs)
 
-  /* cuantos trabajos por seniority */
-  const seniorityCount = filteredJobs.reduce((acc, job) => {
-    /* acc[job.experience_level] - para cada tipo */
-    // Si el nivel ya existe en el acumulador, suma 1.
-    // Si no existe, lo inicializa en 0 y luego suma 1.
-    acc[job.experience_level] = (acc[job.experience_level] || 0) + 1
-    return acc
-  },
-    {} as Record<string, number> //el inicio es un objeto vacio que tendrá claves tipo string y valores tipo number
-  )
 
-  const seniorityData = Object.entries(seniorityCount).map(
-    ([level, count]) => ({
-      level,
-      count,
-    })
-  )
 
-  /* trabajos remotos vs resto */
-  const remoteData = [
-    {
-      name: "Remote",
-      value: filteredJobs.filter(job => job.remote).length,
-    },
-    {
-      name: "Onsite",
-      value: filteredJobs.filter(job => !job.remote).length,
-    },
-  ]
-
-  // Usa reduce para transformar el array en un objeto agrupado por seniority
-  const senioritySalary = filteredJobs.reduce(
-    // reduce recibe (acumulador, elementoActual) en cada iteración
-    (acc, job) => {
-      // Si el nivel aún no existe en el acumulador, lo inicializa
-      if (!acc[job.experience_level as Seniority]) {
-        acc[job.experience_level as Seniority] = { total: 0, count: 0 }
-      }
-
-      // Calcula el promedio salarial del job actual
-      const avg = (job.salary_min + job.salary_max) / 2
-
-      // Acumula el promedio en la propiedad 'total'
-      acc[job.experience_level as Seniority].total += avg
-
-      // Incrementa el contador para ese nivel
-      acc[job.experience_level as Seniority].count += 1
-
-      // Devuelve el acumulador para la siguiente iteración
-      return acc
-    },
-    // Valor inicial del acumulador (se usa en la primera iteración)
-    {} as Record<Seniority, { total: number; count: number }>
-    // reduce recorre todo el array y retorna el acumulador final
-  )
-
-  // Creamos una constante llamada senioritySalaryData
-  const senioritySalaryData =
-
-    // Object.keys convierte el objeto senioritySalary en un array
-    // con sus claves (ej: ["junior", "mid", "senior"])
-    (Object.keys(senioritySalary) as Seniority[])
-      // Le decimos a TypeScript que esas claves son del tipo Seniority[]
-      // (porque por defecto las trata como string[])
-
-      // Recorremos cada clave (cada nivel de seniority)
-      .map(
-        (level) => ({
-
-          // Creamos una propiedad llamada seniority
-          // cuyo valor es el nivel actual (ej: "junior")
-          seniority: level,
-
-          // Creamos la propiedad averageSalary
-          averageSalary:
-
-            // Comprobamos que count sea mayor que 0
-            // para evitar dividir entre 0
-            senioritySalary[level].count > 0
-
-              // Si hay datos, calculamos el promedio:
-              // total acumulado dividido entre cantidad
-              ? senioritySalary[level].total /
-              senioritySalary[level].count
-              // Si no hay datos, devolvemos 0
-              : 0,
-        })
-      )
 
   return (
     <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6">
@@ -291,55 +192,8 @@ export default function Home() {
 
         </div>
 
-        <div className="flex flex-col w-auto gap-4 h-fit lg:flex-row ">
-          <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-60 flex justify-center items-center lg:min-h-60">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={seniorityData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="level" />
-                <YAxis width={25} />
-                <Tooltip />
-                <Bar fill='#7163ba' dataKey="count" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-60 flex justify-center items-center lg:min-h-60">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  fill='#7163ba'
-                  data={remoteData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  label
-                />
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="bg-white rounded-2xl w-full lg:w-1/2  min-h-60 flex justify-center items-center lg:min-h-60">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={senioritySalaryData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="seniority" />
-                <YAxis />
-                <Tooltip formatter={(value) => `€${Number(value).toLocaleString()}`} />
-                <Line
-                  type="monotone"
-                  dataKey="averageSalary"
-                  stroke="#6366f1"
-                  strokeWidth={3}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        {/* MÉTRICAS */}
+        <Metricas filteredJobs={filteredJobs} />
 
         {/* tabla de render de jobs */}
         <div className="overflow-x-auto min-h-fit mt-4 rounded-2xl bg-white shadow-[0_0_0_2px_var(--color-main)]">
