@@ -10,7 +10,7 @@ export const Kpis = ({ totalJobs, remotePercentage, avgSalary }: Props) => {
 
     return (
 
-        <div className="grid grid-cols-1 grid- md:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 grid- md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {/* trabajos totales */}
             <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
                 <div className="flex flex-col justify-between">

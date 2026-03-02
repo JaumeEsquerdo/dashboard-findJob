@@ -9,7 +9,7 @@ type Props = {
 export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selectedJob }: Props) => {
     return (
         <>
-            <div className="overflow-x-auto min-h-fit mt-4 rounded-2xl bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+            <div className="overflow-x-auto min-h-fit mt-8 rounded-2xl bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
                 <table className="min-w-full bg-white rounded-2xl">
                     <thead className="bg-background text-left ">
                         <tr >

@@ -24,6 +24,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
     const seniorityOrder: Seniority[] = ["Junior", "Mid-level", "Senior"]
 
 
+
     /* cuantos trabajos por seniority */
     const seniorityCount = filteredJobs.reduce((acc, job) => {
         /* acc[job.experience_level] - para cada tipo */
@@ -40,8 +41,10 @@ export const Metricas = ({ filteredJobs }: Props) => {
         .filter(level => seniorityCount[level] !== undefined) // solo niveles que existen
         .map(level => ({
             level,
-            count: seniorityCount[level],
+            contador: seniorityCount[level],
         }))
+
+    const seniorityHasData = seniorityData.some(level => level.contador > 0)
 
     /* trabajos remotos vs resto */
     const remoteData = [
@@ -54,7 +57,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
             value: filteredJobs.filter(job => !job.remote).length,
         },
     ]
-
+    const hasData = remoteData.some(item => item.value > 0)
 
     // Usa reduce para transformar el array en un objeto agrupado por seniority
     const senioritySalary = filteredJobs.reduce(
@@ -62,7 +65,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
         (acc, job) => {
             // Si el nivel aún no existe en el acumulador, lo inicializa
             if (!acc[job.experience_level as Seniority]) {
-                acc[job.experience_level as Seniority] = { total: 0, count: 0 }
+                acc[job.experience_level as Seniority] = { total: 0, contador: 0 }
             }
 
             // Calcula el promedio salarial del job actual
@@ -72,13 +75,13 @@ export const Metricas = ({ filteredJobs }: Props) => {
             acc[job.experience_level as Seniority].total += avg
 
             // Incrementa el contador para ese nivel
-            acc[job.experience_level as Seniority].count += 1
+            acc[job.experience_level as Seniority].contador += 1
 
             // Devuelve el acumulador para la siguiente iteración
             return acc
         },
         // Valor inicial del acumulador (se usa en la primera iteración)
-        {} as Record<Seniority, { total: number; count: number }>
+        {} as Record<Seniority, { total: number; contador: number }>
         // reduce recorre todo el array y retorna el acumulador final
     )
 
@@ -98,104 +101,130 @@ export const Metricas = ({ filteredJobs }: Props) => {
                     // cuyo valor es el nivel actual (ej: "junior")
                     seniority: level,
 
-                    // Creamos la propiedad averageSalary
-                    averageSalary:
+                    // Creamos la propiedad Salario_Medio
+                    Salario_Medio:
 
                         // Comprobamos que count sea mayor que 0
                         // para evitar dividir entre 0
-                        senioritySalary[level].count > 0
+                        senioritySalary[level].contador > 0
 
                             // Si hay datos, calculamos el promedio:
                             // total acumulado dividido entre cantidad
                             ? senioritySalary[level].total /
-                            senioritySalary[level].count
+                            senioritySalary[level].contador
                             // Si no hay datos, devolvemos 0
                             : 0,
                 })
             )
     return (
         <>
-            <div className="flex flex-col w-auto gap-4 h-fit lg:flex-row ">
-                <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 flex justify-center items-center lg:min-h-70">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={seniorityData}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="level" />
-                            <YAxis width={28} />
-                            <Tooltip />
-                            <Bar
-                                dataKey="count"
-                                shape={(props) => {
-                                    const { x, y, width, height, index } = props
-                                    return <rect x={x} y={y} width={width} height={height} fill={COLORS[index % COLORS.length]} />
-                                }}
-                            />
-                        </BarChart>
-                    </ResponsiveContainer>
+            <div className="flex flex-col w-auto gap-6 h-fit lg:flex-row mt-8">
+                <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 shadow-md flex justify-center items-center lg:min-h-70">
+
+                    {seniorityHasData ?
+                        (
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={seniorityData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="level" />
+                                    <YAxis width={28} />
+                                    <Tooltip contentStyle={{
+                                        borderRadius: "12px",
+                                    }} />
+                                    <Bar
+                                        dataKey="contador"
+                                        shape={(props) => {
+                                            const { x, y, width, height, index } = props
+                                            return <rect x={x} y={y} width={width} height={height} fill={COLORS[index % COLORS.length]} />
+                                        }}
+                                    />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        )
+                        :
+                        <p className="w-fit font-medium">No hay datos suficientes</p>
+                    }
+
                 </div>
 
-                <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 flex justify-center items-center lg:min-h-70">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                            <Pie
-                                data={remoteData}
-                                dataKey="value"
-                                nameKey="name"
-                                cx="50%"
-                                cy="50%"
-                                outerRadius={100}
-                                label
-                                shape={(props) => {
-                                    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, index } = props
-                                    return (
-                                        <Sector
-                                            cx={cx}
-                                            cy={cy}
-                                            innerRadius={innerRadius}
-                                            outerRadius={outerRadius}
-                                            startAngle={startAngle}
-                                            endAngle={endAngle}
-                                            fill={COLORS[index % COLORS.length]}
-                                        />
-                                    )
-                                }}
-                            />
+                <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65  shadow-md flex justify-center items-center lg:min-h-70">
 
-                            <Tooltip />
-                            <Legend
-                                content={(props) => {
-                                    const { payload } = props
-                                    return (
-                                        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                                            {payload?.map((entry, index) => (
-                                                <li key={`item-${index}`} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                                    <div style={{ width: 12, height: 12, backgroundColor: COLORS[index % COLORS.length] }} />
-                                                    <span>{entry.value}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )
-                                }}
-                            />
-                        </PieChart>
-                    </ResponsiveContainer>
+                    {hasData ? (
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <Pie
+                                    data={remoteData}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%"
+                                    cy="50%"
+                                    outerRadius={100}
+                                    label
+                                    shape={(props) => {
+                                        const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, index } = props
+                                        return (
+                                            <Sector
+                                                cx={cx}
+                                                cy={cy}
+                                                innerRadius={innerRadius}
+                                                outerRadius={outerRadius}
+                                                startAngle={startAngle}
+                                                endAngle={endAngle}
+                                                fill={COLORS[index % COLORS.length]}
+                                            />
+                                        )
+                                    }}
+                                />
+
+                                <Tooltip contentStyle={{
+                                    borderRadius: "12px",
+                                }} />
+                                <Legend
+                                    content={(props) => {
+                                        const { payload } = props
+                                        return (
+                                            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                                {payload?.map((entry, index) => (
+                                                    <li key={`item-${index}`} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                                        <div style={{ width: 12, height: 12, backgroundColor: COLORS[index % COLORS.length] }} />
+                                                        <span>{entry.value}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )
+                                    }}
+                                />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    )
+                        :
+                        <p className="w-fit font-medium">No hay datos suficientes</p>
+                    }
+
                 </div>
 
-                <div className="bg-white rounded-2xl w-full lg:w-1/2  min-h-65 flex justify-center items-center lg:min-h-70">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={senioritySalaryData}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="seniority" />
-                            <YAxis />
-                            <Tooltip formatter={(value) => `€${Number(value).toLocaleString()}`} />
-                            <Line
-                                type="monotone"
-                                dataKey="averageSalary"
-                                stroke="#7163ba"
-                                strokeWidth={3}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
+                <div className="bg-white rounded-2xl w-full lg:w-1/2  min-h-65 flex shadow-md justify-center items-center lg:min-h-70">
+                    {
+                        senioritySalaryData.length > 0 ? (
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={senioritySalaryData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="seniority" />
+                                    <YAxis />
+                                    <Tooltip contentStyle={{
+                                        borderRadius: "12px",
+                                    }} formatter={(value) => `€${Number(value).toLocaleString()}`} />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="Salario_Medio"
+                                        stroke="#7163ba"
+                                        strokeWidth={3}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        ) : <p className="w-fit font-medium">No hay datos suficientes</p>
+                    }
+
                 </div>
             </div>
         </>
