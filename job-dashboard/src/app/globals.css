@@ -47,3 +47,7 @@ body,
   -ms-overflow-style: none; /* IE y Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+:focus {
+  outline: 2px solid #7163ba;
+}
