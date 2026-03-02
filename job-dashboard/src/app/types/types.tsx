@@ -14,3 +14,5 @@ export type Job = {
     description: string
     url: string
 }
+
+export type Seniority = "Junior" | "Mid-level" | "Senior"
