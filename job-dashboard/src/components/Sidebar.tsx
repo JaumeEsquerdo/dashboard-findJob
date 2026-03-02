@@ -28,7 +28,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                 {/* Botón X solo en móvil */}
                 <button
                     onClick={() => setOpen(false)}
-                    className="cursor-pointer absolute top-4 right-4 lg:hidden text-xl font-bold"
+                    className="cursor-pointer absolute top-4 right-4 lg:hidden text-xl font-bold p-2 rounded-2xl transition duration-200 active:shadow-md md:hover:shadow-md"
                 >
                     ✕
                 </button>
