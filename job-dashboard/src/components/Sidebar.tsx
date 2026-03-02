@@ -19,7 +19,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
             )}
             <aside
                 className={`
-        fixed top-0 right-0 h-full w-2/3 bg-white z-50 p-6 rounded-tl-2xl rounded-bl-2xl lg:rounded-2xl flex flex-col justify-start items-center
+        fixed top-0 right-0 h-full w-2/3 bg-white z-50 rounded-tl-2xl rounded-bl-2xl lg:rounded-2xl flex flex-col justify-start 
         transform transition-transform duration-300
         ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}
         lg:static lg:translate-x-0 lg:h-auto lg:w-80
@@ -36,7 +36,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                 {/* Contenido del sidebar */}
                 {!job && (
                     <>
-                        <header className="flex flex-col items-center gap-2 mt-24">
+                        <header className="flex flex-col items-center gap-2 mt-24 p-4 lg:p-6">
                             <h3 className="font-medium text-xl">Detalles del trabajo</h3>
                             <p className="text-center">Clica algún trabajo para ver los detalles</p>
                         </header>
@@ -48,18 +48,25 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                 )}
 
                 {job && (
-                    <div className="flex flex-col gap-8 justify-start mt-12 overflow-y-auto">
+                    <div className="flex flex-col gap-8 justify-start p-4 lg:p-6 mt-12 overflow-y-auto">
                         <h2 className="font-medium text-xl text-left">{job.title}</h2>
 
                         <div className="flex flex-col gap-6">
                             <p><span className="font-medium">Compañia:</span> {job.company}</p>
                             <p><span className="font-medium">Localización:</span> {job.location}</p>
-                            <p><span className="font-medium">Descripción del puesto:</span> {job.description}</p>
                             <p><span className="font-medium">Experiencia:</span> {job.experience_level}</p>
-                            <p><span className="font-medium">Herramientas:</span> {job.tags.join(', ')}</p>
                             <p><span className="font-medium">Salario:</span> {job.salary_min} {job.salary_max ? `- ${job.salary_max}` : ''} {job.currency}</p>
                             <p><span className="font-medium">Publicado el:</span> {job.posted_at.split('-').reverse().join('-')}</p>
-                            <p><span className="font-medium">Para postularte:</span> <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-main lg:hover:text-foreground lg:hover:underline transition duration-200">{job.url}</a></p>
+                            <div className="mt-6">
+                                <h2 className="font-medium">Herramientas:</h2>
+                                <p>{job.tags.join(', ')}</p>
+                            </div>
+                            <div className="">
+                                <h2 className="font-medium">Descripción del puesto:</h2>
+                                <p>{job.description}</p>
+                            </div>
+                            <a href={job.url} target="_blank" rel="noopener noreferrer" className="shadow-[0_0_0_2px_var(--color-main)]
+  hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] lg:hover:-translate-y-1.5 transform focus:translate-0 lg:active:-translate-y-1 lg:active:shadow-[0_0_0_2px_var(--color-main),0_2px_0_2px_var(--color-main)] cursor-pointer px-4 py-2 rounded-2xl font-medium transition bg-whiteSpecial text-main w-fit duration-150">Solicitar</a>
                         </div>
                     </div>
                 )}
