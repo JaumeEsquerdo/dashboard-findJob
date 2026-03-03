@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useState, useMemo, } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
 import { type Job } from "./types/types";
@@ -10,7 +10,6 @@ import { Kpis } from "../components/Kpis";
 import { RenderJobs } from "../components/RenderJobs";
 import { FiltrosSelects } from "../components/FiltrosSelects";
 import { type Filters } from "../app/types/types";
-
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,8 +21,6 @@ export default function Home() {
     location: '',
   })
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
-
-
 
   /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en localStorage. */
   const [isOnboardingVisible, setIsOnboardingVisible] = useState(() => {
@@ -44,7 +41,6 @@ export default function Home() {
         job.title.toLowerCase().includes(filters.search.toLowerCase()) ||
         job.company.toLowerCase().includes(filters.search.toLowerCase())
 
-
       const matchesExperience =
         filters.experience === '' ||
         job.experience_level === filters.experience
@@ -59,7 +55,6 @@ export default function Home() {
   }, [jobs, filters.experience, filters.location, filters.search])
 
   /* KPIS */
-
   /* empleos totales filtrados */
   const totalJobs = filteredJobs.length
 
@@ -71,9 +66,6 @@ export default function Home() {
   const avgSalary =
     totalJobs === 0 ?
       0 : Math.round(filteredJobs.reduce((acc, job) => acc + job.salary_min, 0) / totalJobs)
-
-
-
 
   return (
     <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6">

@@ -6,7 +6,7 @@ export const useHelper = () => {
   const context = useContext(HelperContext);
 
   if (!context) {
-    throw new Error("Debe usarse dentro del HelerProvider");
+    throw new Error("Debe usarse dentro del HelperProvider");
   }
   return context;
 };

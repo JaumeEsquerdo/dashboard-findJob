@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "../components/Navbar";
 import { DarkModeProvider } from "../context/DarkModeContext";
 import { HelperProvider } from "../context/HelperContext";
+import { ScrollProvider } from "../context/ScrollContext";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -33,10 +34,12 @@ export default function RootLayout({
         className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col h-screen overflow-auto gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
         <HelperProvider>
-          <DarkModeProvider>
-            <Navbar />
-            {children}
-          </DarkModeProvider>
+          <ScrollProvider>
+            <DarkModeProvider>
+              <Navbar />
+              {children}
+            </DarkModeProvider>
+          </ScrollProvider>
         </HelperProvider>
       </body>
     </html>
