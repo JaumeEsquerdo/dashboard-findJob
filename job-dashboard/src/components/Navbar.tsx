@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { useContext, useEffect, useState } from 'react';
 import { DarkModeContext } from '../context/DarkModeContext';
+import { useHelper } from '../context/useHelper';
 
 const iconsNav = [
     { name: 'Home', src: '/Home.svg', href: '/' },
@@ -17,6 +18,7 @@ export const Navbar = () => {
     const [mounted, setMounted] = useState(false)
     const pathname = usePathname()
     const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext)
+    const { startGuide, step, endGuide } = useHelper()
 
     /* asegurar q está montado antes de el render de la terneria de la img */
     useEffect(() => {
@@ -45,7 +47,17 @@ export const Navbar = () => {
                 })}
             </ul>
             <ul className='flex gap-1 fixed bottom-6 right-4 bg-main p-2 z-20 rounded-xl shadow-lg lg:flex col lg:relative lg:shadow-none lg:right-auto lg:bottom-auto lg:gap-2'>
-                <li>
+                <li onClick={startGuide} className='relative'>
+                    {step === 1 && (
+                        <div className='absolute -top-22 -left-4 bg-amber-50 w-fit'>
+                            <p>Ayuda abierto</p>
+                            <p onClick={(e) => {
+                                e.stopPropagation()
+                                endGuide()
+                            }
+                            }>cerrar</p>
+                        </div>
+                    )}
                     <Image className='cursor-pointer transform lg:hover:rotate-12 transition duration-100' src={'/Help.svg'} alt='botón de Ajustes' width={32} height={32} />
                 </li>
                 <li onClick={toggleDarkMode}>
