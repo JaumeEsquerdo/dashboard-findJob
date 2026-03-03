@@ -3,6 +3,7 @@ import { Ubuntu, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "../components/Navbar";
 import { DarkModeProvider } from "../context/DarkModeContext";
+import { HelperProvider } from "../context/HelperContext";
 
 const ubuntu = Ubuntu({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ export default function RootLayout({
       <body
         className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col h-screen overflow-auto gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
-        <DarkModeProvider>
-          <Navbar />
-          {children}
-        </DarkModeProvider>
+        <HelperProvider>
+          <DarkModeProvider>
+            <Navbar />
+            {children}
+          </DarkModeProvider>
+        </HelperProvider>
       </body>
     </html>
   );
