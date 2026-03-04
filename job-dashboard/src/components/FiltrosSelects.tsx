@@ -17,7 +17,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
     const [experienceOpen, setExperienceOpen] = useState(false)
     const [ubicationOpen, setUbicationOpen] = useState(false)
     const ref = useRef<HTMLDivElement | null>(null)
-    const dropdownRef = useRef<HTMLDivElement | null>(null)
+    const experienceRef = useRef<HTMLDivElement | null>(null)
     const ubicationRef = useRef<HTMLDivElement | null>(null)
 
 
@@ -33,7 +33,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
         const handleClickOutside = (e: MouseEvent) => {
             // Comprobamos que e.target sea un Node (un nodo del DOM, es decir un elemento, texto o comment dentro del árbol de la página),
             // porque contains() solo acepta nodos del DOM
-            if (dropdownRef.current && e.target instanceof Node && !dropdownRef.current.contains(e.target)) {
+            if (experienceRef.current && e.target instanceof Node && !experienceRef.current.contains(e.target)) {
                 setExperienceOpen(false)
             }
             if (ubicationRef.current && e.target instanceof Node && !ubicationRef.current.contains(e.target)) {
@@ -84,24 +84,26 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
                     </svg>
                 </span>
             </label>
+
             {/* filtros selects */}
+            <div className="w-full flex gap-4 items-center justify-center">
 
-            <div ref={dropdownRef} className="w-full flex gap-4 items-center justify-center">
-                <div
-
-                    className="relative p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none"
-                    onClick={() => setExperienceOpen(!experienceOpen)}
-                >
-                    {filters.experience || 'Experiencia'}
-                    <svg
-                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                <div ref={experienceRef} className="relative w-full">
+                    <div
+                        className="relative p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none"
+                        onClick={() => setExperienceOpen(!experienceOpen)}
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
+                        {filters.experience || 'Experiencia'}
+                        <svg
+                            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
                     {experienceOpen && (
                         <ul className="absolute top-full left-0 mt-1 bg-whiteSpecial border rounded-2xl w-full max-h-40 overflow-auto z-10">
 
@@ -133,54 +135,63 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
                 </div>
 
                 <div ref={ubicationRef} className="relative w-full">
-                    <div className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" onClick={() => setUbicationOpen(!ubicationOpen)}>Ubicación</div>
-                    {ubicationOpen && <ul className="absolute w-full mt-1 bg-whiteSpecial border rounded-2xl max-h-40 overflow-auto z-10">...</ul>}
+                    <div className="relative p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" onClick={() => setUbicationOpen(!ubicationOpen)}>{filters.location || 'Ubicación'}
+                        <svg
+                            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    {ubicationOpen && (
+                        <ul className="absolute top-full left-0 w-full mt-1 bg-whiteSpecial border rounded-2xl max-h-40 overflow-auto z-10">
+                            {/* Reset */}
+                            <li
+                                className="p-2 cursor-pointer font-medium hover:bg-main hover:text-white"
+                                onClick={() => {
+                                    setFilters({ ...filters, location: "" })
+                                    setUbicationOpen(false)
+                                }}
+                            >
+                                Todos
+                            </li>
+                            {/* Remote segundo */}
+                            {uniqueLocations.includes("Remote") && (
+                                <li
+                                    className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                    onClick={() => {
+                                        setFilters({ ...filters, location: "Remote" })
+                                        setUbicationOpen(false)
+                                    }}
+                                >
+                                    Remoto
+                                </li>
+                            )}
+
+                            {/* Resto */}
+                            {uniqueLocations
+                                .filter(loc => loc !== "Remote")
+                                .map((loc) => (
+                                    <li
+                                        key={loc}
+                                        className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                        onClick={() => {
+                                            setFilters({ ...filters, location: loc })
+                                            setUbicationOpen(false)
+                                        }}
+                                    >
+                                        {loc}
+                                    </li>
+                                ))}
+                        </ul>
+                    )}
                 </div>
             </div>
 
-            {/* <div className="flex gap-4 items-center justify-center w-full">
-                <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
-                    <select className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
-                        <option value="" >Experiencia</option>
-                        <option value="Junior">Junior</option>
-                        <option value="Mid-level">Mid-level</option>
-                        <option value="Senior">Senior</option>
-                    </select>
-                    <svg
-                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </label>
-
-
-                <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
-                    <select className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.location} onChange={(e) => setFilters({
-                        ...filters, location: e.target.value
-                    })}>
-                        <option value="">Localización</option>
-                        {uniqueLocations.map((loc) => (
-                            <option key={loc} value={loc}>
-                                {loc}
-                            </option>
-                        ))}
-                    </select>
-                    <svg
-                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </label>
-            </div> */}
-        </div>
+        </div >
 
     );
 }
