@@ -2,7 +2,7 @@
 import { type Filters } from "../app/types/types";
 import { useHelper } from "../context/useHelper";
 import { useScroll } from "../context/useScrollContext";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Button } from "./Button";
 
 type Props = {
@@ -14,7 +14,11 @@ type Props = {
 export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) => {
     const { step, nextStep, endGuide } = useHelper()
     const { setActiveStep, activeStep } = useScroll()
+    const [experienceOpen, setExperienceOpen] = useState(false)
+    const [ubicationOpen, setUbicationOpen] = useState(false)
     const ref = useRef<HTMLDivElement | null>(null)
+    const dropdownRef = useRef<HTMLDivElement | null>(null)
+    const ubicationRef = useRef<HTMLDivElement | null>(null)
 
 
     useEffect(() => {
@@ -22,6 +26,27 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
             ref.current?.scrollIntoView({ behavior: 'smooth' })
         }
     }, [activeStep])
+
+    /* detectar click fuera del dropdown */
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            // Comprobamos que e.target sea un Node (un nodo del DOM, es decir un elemento, texto o comment dentro del árbol de la página),
+            // porque contains() solo acepta nodos del DOM
+            if (dropdownRef.current && e.target instanceof Node && !dropdownRef.current.contains(e.target)) {
+                setExperienceOpen(false)
+            }
+            if (ubicationRef.current && e.target instanceof Node && !ubicationRef.current.contains(e.target)) {
+                setUbicationOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
 
 
     return (
@@ -60,7 +85,60 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
                 </span>
             </label>
             {/* filtros selects */}
-            <div className="flex gap-4 items-center justify-center w-full">
+
+            <div ref={dropdownRef} className="relative w-full">
+                <div
+
+                    className="p-2 cursor-pointer rounded-2xl bg-whiteSpecial flex justify-between items-center"
+                    onClick={() => setExperienceOpen(!experienceOpen)}
+                >
+                    {filters.experience || 'Experiencia'}
+                    <svg
+                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                {experienceOpen && (
+                    <ul className="absolute w-full mt-1 bg-whiteSpecial border rounded-2xl max-h-40 overflow-auto z-10">
+
+                        {/* Opción reset */}
+                        <li
+                            className="p-2 cursor-pointer font-medium hover:bg-main hover:text-white"
+                            onClick={() => {
+                                setFilters({ ...filters, experience: "" })
+                                setExperienceOpen(false)
+                            }}
+                        >
+                            Todos
+                        </li>
+
+                        {/* opciones */}
+                        {['Junior', 'Mid-level', 'Senior'].map((exp) => (
+                            <li key={exp}
+                                className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                onClick={() => {
+                                    setFilters({ ...filters, experience: exp })
+                                    setExperienceOpen(false)
+                                }}
+                            >
+                                {exp}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                <div ref={ubicationRef} className="relative w-full">
+                    <div onClick={() => setUbicationOpen(!ubicationOpen)}>Ubicación</div>
+                    {ubicationOpen && <ul className="absolute w-full mt-1 bg-whiteSpecial border rounded-2xl max-h-40 overflow-auto z-10">...</ul>}
+                </div>
+            </div>
+
+            {/* <div className="flex gap-4 items-center justify-center w-full">
                 <label className="relative w-full block lg:hover:-translate-y-1.5 transition duration-100">
                     <select className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" value={filters.experience} onChange={(e) => setFilters({ ...filters, experience: e.target.value })}>
                         <option value="" >Experiencia</option>
@@ -101,7 +179,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </label>
-            </div>
+            </div> */}
         </div>
 
     );
