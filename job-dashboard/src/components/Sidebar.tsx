@@ -1,4 +1,6 @@
 import { type Job } from "../app/types/types"
+import { useHelper } from "../context/useHelper"
+import { useScroll } from "../context/useScrollContext"
 
 interface sidebarProps {
     sidebarOpen: boolean
@@ -8,6 +10,8 @@ interface sidebarProps {
 
 
 export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
+    const { step, startGuide } = useHelper()
+    const { setActiveStep } = useScroll()
     return (
         <>
             {/* overlay clicable para cerrar sidebar */}
@@ -42,7 +46,9 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                         </header>
                         <section className="flex flex-col gap-2 items-center mt-auto mb-20">
                             <p>¿No sabes cómo empezar?</p>
-                            <p>Te guiamos nosotros</p>
+                            <div className='cursor-pointer' onClick={step === null ? startGuide : undefined}
+                            >Te ayudamos nosotros
+                            </div>
                         </section>
                     </>
                 )}
@@ -66,12 +72,12 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                                 <p>{job.description}</p>
                             </div>
                             <a href={job.url} target="_blank" rel="noopener noreferrer" className="shadow-[0_0_0_2px_var(--color-main)]
-  hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] lg:hover:-translate-y-1.5 transform focus:translate-0 lg:active:-translate-y-1 lg:active:shadow-[0_0_0_2px_var(--color-main),0_2px_0_2px_var(--color-main)] cursor-pointer px-4 py-2 rounded-2xl font-medium transition bg-whiteSpecial text-main w-fit duration-150">Solicitar</a>
+  hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] lg:hover:-translate-y-1.5 transform focus:translate-0 lg:active:-translate-y-1 lg:active:shadow-[0_0_0_2px_var(--color-main),0_2px_0_2px_var(--color-main)] cursor-pointer px-4 py-2 rounded-2xl font-medium transition bg-whiteSpecial text-main w-full text-center duration-150">Solicitar</a>
                         </div>
                     </div>
                 )}
 
-            </aside>
+            </aside >
         </>
     );
 }
