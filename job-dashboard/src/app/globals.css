@@ -40,6 +40,7 @@ html,
 body,
 #__next {
   height: 100%;
+  color: var(--color-textColor);
 }
 
 /* ocultar barra de scroll */

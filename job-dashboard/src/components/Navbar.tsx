@@ -52,21 +52,19 @@ export const Navbar = () => {
             <ul className='flex gap-1 fixed bottom-6 right-4 bg-main p-2 z-20 rounded-xl shadow-lg lg:flex col lg:relative lg:shadow-none lg:right-auto lg:bottom-auto lg:gap-2'>
                 <li onClick={step === null ? startGuide : undefined} className={`relative`}>
                     {step === 1 && (
-                        <div className='absolute -top-60 -left-60 p-6 flex flex-col gap-2 bg-amber-50 w-80 rounded-2xl'>
+                        <div className='absolute -top-60 -left-60 p-6 flex flex-col gap-2 bg-amber-50 w-80 rounded-2xl lg:left-0'>
                             <p>Para entender más el flow de la app sigue este pequeñeo tutorial.</p>
-                            <button className='bg-amber-200 w-full p-2 rounded-2xl' onClick={(e) => {
+                            <button className='bg-amber-200 cursor-pointer w-full p-2 rounded-2xl' onClick={(e) => {
                                 e.stopPropagation()
                                 nextStep()
                                 setActiveStep(2)
                             }
                             }>Siguiente paso
                             </button>
-                            <button className='bg-amber-200 w-full p-2 rounded-2xl' onClick={(e) => {
-                                e.stopPropagation()
+                            <button className="bg-amber-200 w-full p-2 rounded-2xl" onClick={() => {
                                 endGuide()
-                            }
-                            }>Cerrar
-                            </button>
+                                setActiveStep(0)
+                            }}>Cerrar</button>
                         </div>
                     )}
                     <Image className='cursor-pointer transform lg:hover:rotate-12 transition duration-100' src={'/Help.svg'} alt='botón de Ajustes' width={32} height={32} />

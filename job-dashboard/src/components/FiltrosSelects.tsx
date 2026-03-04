@@ -26,14 +26,17 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
     return (
         <div ref={ref} className="relative flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center pt-4 mt-4">
             {step === 2 && (
-                <div className="absolute top-28 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 rounded-2xl z-20">
+                <div className="absolute top-28 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 rounded-2xl z-20 lg:top-22">
                     <p>Aquí puedes filtrar tanto por palabras clave como por experiencia y/o localización.</p>
                     <button className="bg-amber-200 w-full p-2 rounded-2xl" onClick={() => {
                         nextStep()
                         setActiveStep(3)
                     }
                     }>Siguiente paso</button>
-                    <button className="bg-amber-200 w-full p-2 rounded-2xl" onClick={endGuide}>Cerrar</button>
+                    <button className="bg-amber-200 w-full p-2 rounded-2xl" onClick={() => {
+                        endGuide()
+                        setActiveStep(0)
+                    }}>Cerrar</button>
                 </div>
             )}
             {/* input search */}

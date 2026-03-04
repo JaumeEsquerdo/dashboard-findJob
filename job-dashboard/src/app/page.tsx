@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { useState, useMemo, } from "react";
+import { useState, useMemo } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
 import { type Job } from "./types/types";
@@ -21,6 +21,7 @@ export default function Home() {
     location: '',
   })
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
+
 
   /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en localStorage. */
   const [isOnboardingVisible, setIsOnboardingVisible] = useState(() => {
