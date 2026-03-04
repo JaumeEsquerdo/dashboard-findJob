@@ -86,10 +86,10 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
             </label>
             {/* filtros selects */}
 
-            <div ref={dropdownRef} className="relative w-full">
+            <div ref={dropdownRef} className="w-full flex gap-4 items-center justify-center">
                 <div
 
-                    className="p-2 cursor-pointer rounded-2xl bg-whiteSpecial flex justify-between items-center"
+                    className="relative p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none"
                     onClick={() => setExperienceOpen(!experienceOpen)}
                 >
                     {filters.experience || 'Experiencia'}
@@ -102,38 +102,38 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
                     >
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                </div>
-                {experienceOpen && (
-                    <ul className="absolute w-full mt-1 bg-whiteSpecial border rounded-2xl max-h-40 overflow-auto z-10">
+                    {experienceOpen && (
+                        <ul className="absolute top-full left-0 mt-1 bg-whiteSpecial border rounded-2xl w-full max-h-40 overflow-auto z-10">
 
-                        {/* Opción reset */}
-                        <li
-                            className="p-2 cursor-pointer font-medium hover:bg-main hover:text-white"
-                            onClick={() => {
-                                setFilters({ ...filters, experience: "" })
-                                setExperienceOpen(false)
-                            }}
-                        >
-                            Todos
-                        </li>
-
-                        {/* opciones */}
-                        {['Junior', 'Mid-level', 'Senior'].map((exp) => (
-                            <li key={exp}
-                                className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                            {/* Opción reset */}
+                            <li
+                                className="p-2 cursor-pointer font-medium hover:bg-main hover:text-white"
                                 onClick={() => {
-                                    setFilters({ ...filters, experience: exp })
+                                    setFilters({ ...filters, experience: "" })
                                     setExperienceOpen(false)
                                 }}
                             >
-                                {exp}
+                                Todos
                             </li>
-                        ))}
-                    </ul>
-                )}
+
+                            {/* opciones */}
+                            {['Junior', 'Mid-level', 'Senior'].map((exp) => (
+                                <li key={exp}
+                                    className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                    onClick={() => {
+                                        setFilters({ ...filters, experience: exp })
+                                        setExperienceOpen(false)
+                                    }}
+                                >
+                                    {exp}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
 
                 <div ref={ubicationRef} className="relative w-full">
-                    <div onClick={() => setUbicationOpen(!ubicationOpen)}>Ubicación</div>
+                    <div className="p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" onClick={() => setUbicationOpen(!ubicationOpen)}>Ubicación</div>
                     {ubicationOpen && <ul className="absolute w-full mt-1 bg-whiteSpecial border rounded-2xl max-h-40 overflow-auto z-10">...</ul>}
                 </div>
             </div>
