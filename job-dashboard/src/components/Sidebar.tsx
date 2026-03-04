@@ -46,7 +46,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                         </header>
                         <section className="flex flex-col gap-2 items-center mt-auto mb-20">
                             <p>¿No sabes cómo empezar?</p>
-                            <div className='cursor-pointer' onClick={step === null ? startGuide : undefined}
+                            <div className='cursor-pointer transition duration-150 lg:hover:text-main' onClick={step === null ? startGuide : undefined}
                             >Te ayudamos nosotros
                             </div>
                         </section>
