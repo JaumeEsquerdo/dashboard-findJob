@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useState, ReactNode } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 type Step = 1 | 2 | 3 | null
 
 
@@ -17,9 +18,14 @@ interface HelperContext {
 export const HelperContext = createContext<HelperContext | undefined>(undefined)
 
 export const HelperProvider = ({ children }: { children: ReactNode }) => {
+    const router = useRouter()
+    const pathname = usePathname()
     const [step, setStep] = useState<Step>(null)
 
     const startGuide = () => {
+        if (pathname !== '/') {
+            router.push('/')
+        }
         setStep(1)
     }
 
