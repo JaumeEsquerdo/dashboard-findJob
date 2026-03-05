@@ -35,20 +35,21 @@ const About = () => {
             </div>
 
             <div className="flex flex-col gap-4 lg:flex-row">
-                <div className="relative flex flex-col w-full justify-between items-center p-4 lg:mt-12 rounded-2xl bg-whiteSpecial lg:pr-8 lg:pl-8 lg:min-h-32">
+                <div className="relative flex flex-col w-full justify-between items-center p-4 lg:mt-12 rounded-2xl bg-whiteSpecial lg:pr-8 lg:pl-8 lg:min-h-50">
 
                     <h2 className="text-center text-xl  font-medium text-textColor lg:text-start">🛠 Stack técnico de la creación de la web</h2>
                     <div className="flex flex-wrap justify-center items-center gap-2">
                         {techs.map((tech) => (
                             <div key={tech.name} >
-                                <div className="group relative w-16 h-16 m-2">
+                                <div className="group relative w-16 h-16 m-2 flex justify-center items-center">
                                     <Image
                                         src={tech.icon}
                                         alt={tech.name}
-                                        fill
+                                        width={50}
+                                        height={50}
                                         className="object-contain"
                                     />
-                                    <span className="absolute  -bottom-9/12 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-main text-white text-xs px-2 py-2 font-medium rounded-xl opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap z-20">
+                                    <span className="absolute  -bottom-10/12 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-main text-white text-xs px-2 py-2 font-medium rounded-xl opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap z-20">
                                         {tech.name}
                                     </span>
                                 </div>
