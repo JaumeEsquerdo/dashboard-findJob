@@ -4,9 +4,10 @@ const techs = [
     { name: "React", icon: "/react.svg" },
     { name: "Next JS", icon: "/next.svg" },
     { name: "TypeScript", icon: "/typescript.svg" },
-    { name: "Tailwind CSS", icon: "/tailwindcss.svg" },
     { name: "Zod", icon: "/zod.svg" },
-    { name: 'Figma', icon: '/figma.svg' }
+    { name: "Tailwind CSS", icon: "/tailwindcss.svg" },
+    { name: 'Framer Motion', icon: '/motion.svg' },
+    { name: 'Figma', icon: '/figma.svg' },
 ];
 
 const About = () => {

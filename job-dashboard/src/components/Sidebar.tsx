@@ -1,6 +1,7 @@
 import { type Job } from "../app/types/types"
 import { useHelper } from "../context/useHelper"
 import { useScroll } from "../context/useScrollContext"
+import { motion } from 'framer-motion'
 
 interface sidebarProps {
     sidebarOpen: boolean
@@ -54,7 +55,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                 )}
 
                 {job && (
-                    <div className="flex flex-col gap-8 justify-start p-4 lg:p-6 mt-12 overflow-y-auto">
+                    <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.4 }} className="flex flex-col gap-8 justify-start p-4 lg:p-6 mt-12 overflow-y-auto">
                         <h2 className="font-medium text-xl text-left">{job.title}</h2>
 
                         <div className="flex flex-col gap-6">
@@ -74,7 +75,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                             <a href={job.url} target="_blank" rel="noopener noreferrer" className="shadow-[0_0_0_2px_var(--color-main)]
   hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] lg:hover:-translate-y-1.5 transform focus:translate-0 lg:active:-translate-y-1 lg:active:shadow-[0_0_0_2px_var(--color-main),0_2px_0_2px_var(--color-main)] cursor-pointer px-4 py-2 rounded-2xl font-medium transition bg-whiteSpecial text-main w-full text-center duration-150 lg:hover:bg-amber-100">Solicitar</a>
                         </div>
-                    </div>
+                    </motion.div>
                 )}
 
             </aside >

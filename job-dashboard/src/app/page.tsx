@@ -10,6 +10,7 @@ import { Kpis } from "../components/Kpis";
 import { RenderJobs } from "../components/RenderJobs";
 import { FiltrosSelects } from "../components/FiltrosSelects";
 import { type Filters } from "../app/types/types";
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -69,29 +70,31 @@ export default function Home() {
       0 : Math.round(filteredJobs.reduce((acc, job) => acc + job.salary_min, 0) / totalJobs)
 
   return (
-    <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6">
+    <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6 overflow-x-hidden">
 
-      <main className="flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+      <motion.main layout className="flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
         <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
           <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
         </header>
 
         {/* onboarding */}
-        {isOnboardingVisible && (
-          <div className="relative flex flex-col-reverse justify-between items-center p-4 lg:mt-6 rounded-2xl bg-whiteSpecial lg:flex-row lg:pr-8 lg:pl-8">
-            <div className="flex flex-col gap-5 justify-center items-center lg:items-start lg:max-w-1/2">
-              <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Explora el mercado laboral tech en tiempo real</h2>
-              <p>Este dashboard recopila y organiza ofertas de empleo del sector tecnológico para que puedas visualizar tendencias, tecnologías más demandadas y oportunidades activas.</p>
-              <p>Filtra por stack, ubicación o modalidad y analiza el mercado con una perspectiva clara y estructurada.</p>
-              <Button onClick={handleClose}>Entendido</Button>
-            </div>
+        <AnimatePresence>
+          {isOnboardingVisible && (
+            <motion.div exit={{ opacity: 0.4 }} transition={{ duration: 0.2 }} className="relative flex flex-col-reverse justify-between items-center p-4 lg:mt-6 rounded-2xl bg-whiteSpecial lg:flex-row lg:pr-8 lg:pl-8">
+              <div className="flex flex-col gap-5 justify-center items-center lg:items-start lg:max-w-1/2">
+                <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Explora el mercado laboral tech en tiempo real</h2>
+                <p>Este dashboard recopila y organiza ofertas de empleo del sector tecnológico para que puedas visualizar tendencias, tecnologías más demandadas y oportunidades activas.</p>
+                <p>Filtra por stack, ubicación o modalidad y analiza el mercado con una perspectiva clara y estructurada.</p>
+                <Button onClick={handleClose}>Entendido</Button>
+              </div>
 
-            <Image className="lg:absolute lg:top-20 lg:right-4 xl:-top-14 xl:right-8
+              <Image className="lg:absolute lg:top-20 lg:right-4 xl:-top-14 xl:right-8
               -translate-y-4 lg:-translate-y-12
               lg:w-70
               xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" width={200} height={300} />
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* FILTROS */}
         <FiltrosSelects filters={filters} uniqueLocations={uniqueLocations} setFilters={setFilters} />
@@ -105,7 +108,7 @@ export default function Home() {
 
         {/* TABLA de RENDER JOBS */}
         <RenderJobs filteredJobs={filteredJobs} setSelectedJob={setSelectedJob} setSidebarOpen={setSidebarOpen} selectedJob={selectedJob} />
-      </main >
+      </motion.main >
 
       <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} job={selectedJob} />
     </div >
