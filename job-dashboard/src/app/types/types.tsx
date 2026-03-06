@@ -10,16 +10,17 @@ export type Job = {
     salary_max: number
     currency: string
     tags: string[]
-    posted_at: string
+    posted_at: Date
     description: string
     url: string
 }
 
-export type Seniority = "Junior" | "Mid-level" | "Senior"
+export type Seniority = "Intern" | "Junior" | "Mid" | "Senior"
 
 
 export type Filters = {
     search: string
     experience: string
     location: string
+    remote: boolean | null
 }

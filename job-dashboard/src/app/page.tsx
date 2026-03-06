@@ -1,26 +1,45 @@
 'use client'
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
 import { type Job } from "./types/types";
-import dataJobs from '../data/jobs.json'
+// import dataJobs from '../data/jobs.json'
 import { Metricas } from "../components/Metricas";
 import { Kpis } from "../components/Kpis";
 import { RenderJobs } from "../components/RenderJobs";
 import { FiltrosSelects } from "../components/FiltrosSelects";
 import { type Filters } from "../app/types/types";
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
+import { fetchJobs } from "./lib/api/fetchJobs";
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [jobs, setJobs] = useState<Job[]>(dataJobs.jobs)
+  const [jobs, setJobs] = useState<Job[]>([])
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [filters, setFilters] = useState<Filters>({
     search: '',
     experience: '',
     location: '',
+    remote: null
   })
+
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        const data = await fetchJobs()
+        setJobs(data)
+      } catch (err) {
+        setError(`Error en el fetch: ${err}`)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadJobs()
+  }, [])
+
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
 
 
@@ -47,14 +66,17 @@ export default function Home() {
         filters.experience === '' ||
         job.experience_level === filters.experience
 
+      const matchesRemote =
+        filters.remote === null || job.remote === filters.remote
+
       const matchesLocation =
         filters.location === '' ||
         job.location === filters.location
 
-      return matchesSearch && matchesExperience && matchesLocation
+      return matchesSearch && matchesExperience && matchesLocation && matchesRemote
     })
 
-  }, [jobs, filters.experience, filters.location, filters.search])
+  }, [jobs, filters.experience, filters.location, filters.search, filters.remote])
 
   /* KPIS */
   /* empleos totales filtrados */
@@ -62,12 +84,17 @@ export default function Home() {
 
   /* porcentajos de trabajos remotos filtrados */
   const remoteJobs = filteredJobs.filter(job => job.remote).length
+  const remoteJobsArray = filteredJobs.filter(job => job.remote)
   const remotePercentage = totalJobs === 0 ? 0 : Math.round((remoteJobs / totalJobs) * 100)
 
   /* salario medio */
+  const filteredSalaries = filteredJobs.filter(
+    job => (job.currency === 'EUR' || job.currency === 'USD') && job.salary_min !== null
+  );
+
   const avgSalary =
-    totalJobs === 0 ?
-      0 : Math.round(filteredJobs.reduce((acc, job) => acc + job.salary_min, 0) / totalJobs)
+    filteredSalaries.length === 0 ?
+      0 : Math.round(filteredSalaries.reduce((acc, job) => acc + job.salary_min!, 0) / filteredSalaries.length)
 
   const container: Variants = {
     hidden: {},
@@ -111,7 +138,7 @@ export default function Home() {
         </AnimatePresence>
 
         {/* FILTROS */}
-        <FiltrosSelects variants={item} filters={filters} uniqueLocations={uniqueLocations} setFilters={setFilters} />
+        <FiltrosSelects variants={item} filters={filters} remoteJobsArray={remoteJobsArray} uniqueLocations={uniqueLocations} setFilters={setFilters} />
 
         {/* KPIS render */}
 

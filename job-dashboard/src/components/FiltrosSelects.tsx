@@ -5,15 +5,17 @@ import { useScroll } from "../context/useScrollContext";
 import { useRef, useEffect, useState } from "react";
 import { Button } from "./Button";
 import { motion, type Variants } from 'framer-motion'
+import { type Job } from "../app/types/types";
 
 type Props = {
     filters: Filters
     uniqueLocations: string[]
     setFilters: (filter: Filters) => void
     variants: Variants
+    remoteJobsArray: Job[]
 }
 
-export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants }: Props) => {
+export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants, remoteJobsArray }: Props) => {
     const { step, nextStep, endGuide } = useHelper()
     const { setActiveStep, activeStep } = useScroll()
     const [experienceOpen, setExperienceOpen] = useState(false)
@@ -121,7 +123,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants 
                             </li>
 
                             {/* opciones */}
-                            {['Junior', 'Mid-level', 'Senior'].map((exp) => (
+                            {["Entry level", "Intern", "Junior", "Mid", "Senior", 'Manager'].map((exp) => (
                                 <li key={exp}
                                     className="p-2 cursor-pointer hover:bg-main hover:text-white"
                                     onClick={() => {
@@ -137,7 +139,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants 
                 </div>
 
                 <div ref={ubicationRef} className="relative w-full">
-                    <div className="relative p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" onClick={() => setUbicationOpen(!ubicationOpen)}>{filters.location || 'Ubicación'}
+                    <div className="relative p-2 pr-4 cursor-pointer text-center rounded-2xl w-full bg-whiteSpecial outline-2 outline-main focus:outline-main focus:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)]  focus:outline-2 transition duration-100 appearance-none" onClick={() => setUbicationOpen(!ubicationOpen)}>{filters.location || filters.remote && 'Remoto' || 'Ubicación'}
                         <svg
                             className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-main lg:right-4"
                             xmlns="http://www.w3.org/2000/svg"
@@ -154,18 +156,18 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants 
                             <li
                                 className="p-2 cursor-pointer font-medium hover:bg-main hover:text-white"
                                 onClick={() => {
-                                    setFilters({ ...filters, location: "" })
+                                    setFilters({ ...filters, location: "", remote: null })
                                     setUbicationOpen(false)
                                 }}
                             >
                                 Todos
                             </li>
                             {/* Remote segundo */}
-                            {uniqueLocations.includes("Remote") && (
+                            {remoteJobsArray && (
                                 <li
                                     className="p-2 cursor-pointer hover:bg-main hover:text-white"
                                     onClick={() => {
-                                        setFilters({ ...filters, location: "Remote" })
+                                        setFilters({ ...filters, remote: true })
                                         setUbicationOpen(false)
                                     }}
                                 >

@@ -66,3 +66,13 @@ body,
 :focus {
   outline: 2px solid #7163ba;
 }
+
+/* para el description que viene de la API */
+.prose ul {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}

@@ -23,9 +23,7 @@ type Props = {
 
 export const Metricas = ({ filteredJobs, variants }: Props) => {
     const COLORS = ["#E1D7FF", "#BAA6FF", "#826DC7"]
-    const seniorityOrder: Seniority[] = ["Junior", "Mid-level", "Senior"]
-
-
+    const seniorityOrder: Seniority[] = ["Intern", "Junior", "Mid", "Senior"]
 
     /* cuantos trabajos por seniority */
     const seniorityCount = filteredJobs.reduce((acc, job) => {
@@ -37,7 +35,6 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
     },
         {} as Record<string, number> //el inicio es un objeto vacio que tendrá claves tipo string y valores tipo number
     )
-
 
     const seniorityData = seniorityOrder
         .filter(level => seniorityCount[level] !== undefined) // solo niveles que existen
@@ -65,21 +62,26 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
     const senioritySalary = filteredJobs.reduce(
         // reduce recibe (acumulador, elementoActual) en cada iteración
         (acc, job) => {
-            // Si el nivel aún no existe en el acumulador, lo inicializa
-            if (!acc[job.experience_level as Seniority]) {
-                acc[job.experience_level as Seniority] = { total: 0, contador: 0 }
+            // Solo procesar trabajos con salario definido y moneda válida
+            if (
+                (job.currency === 'EUR' || job.currency === 'USD') &&
+                job.salary_min !== null &&
+                job.salary_max !== null
+            ) {
+                // Inicializa el nivel si no existe
+                if (!acc[job.experience_level as Seniority]) {
+                    acc[job.experience_level as Seniority] = { total: 0, contador: 0 }
+                }
+
+                // Promedio del job actual
+                const avg = (job.salary_min + job.salary_max) / 2
+
+                // Acumula en el total
+                acc[job.experience_level as Seniority].total += avg
+                acc[job.experience_level as Seniority].contador += 1
             }
 
-            // Calcula el promedio salarial del job actual
-            const avg = (job.salary_min + job.salary_max) / 2
-
-            // Acumula el promedio en la propiedad 'total'
-            acc[job.experience_level as Seniority].total += avg
-
-            // Incrementa el contador para ese nivel
-            acc[job.experience_level as Seniority].contador += 1
-
-            // Devuelve el acumulador para la siguiente iteración
+            // Devuelve siempre el acumulador
             return acc
         },
         // Valor inicial del acumulador (se usa en la primera iteración)
@@ -118,11 +120,11 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                             : 0,
                 })
             )
+
     return (
         <>
             <motion.div variants={variants} className="flex flex-col w-auto gap-6 h-fit lg:flex-row mt-8">
                 <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 shadow-md flex justify-center items-center lg:min-h-70">
-
                     {seniorityHasData ?
                         (
                             <ResponsiveContainer width="100%" height="100%">
@@ -146,7 +148,6 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                         :
                         <p className="w-fit font-medium">No hay datos suficientes</p>
                     }
-
                 </div>
 
                 <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65  shadow-md flex justify-center items-center lg:min-h-70">
