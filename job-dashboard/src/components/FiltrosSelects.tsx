@@ -15,7 +15,7 @@ type Props = {
     remoteJobsArray: Job[]
 }
 
-export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants, remoteJobsArray }: Props) => {
+export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants, remoteJobsArray, }: Props) => {
     const { step, nextStep, endGuide } = useHelper()
     const { setActiveStep, activeStep } = useScroll()
     const [experienceOpen, setExperienceOpen] = useState(false)
@@ -32,7 +32,6 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants,
     }, [activeStep])
 
     /* detectar click fuera del dropdown */
-
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             // Comprobamos que e.target sea un Node (un nodo del DOM, es decir un elemento, texto o comment dentro del árbol de la página),
@@ -54,7 +53,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants,
 
 
     return (
-        <motion.div variants={variants} ref={ref} className="relative flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
+        <motion.div layout variants={variants} ref={ref} className="relative flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
             {step === 2 && (
                 <div className="absolute top-32 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-18 lg:gap-4">
                     <p>Aquí puedes filtrar tanto por palabras clave como por experiencia y/o ubicación.</p>
@@ -252,6 +251,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants,
                                 ))}
                         </ul>
                     )}
+
                 </div>
             </div>
 

@@ -123,7 +123,7 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
 
     return (
         <>
-            <motion.div variants={variants} className="flex flex-col w-auto gap-6 h-fit lg:flex-row mt-8">
+            <motion.div layout variants={variants} className="flex flex-col w-auto gap-6 h-fit lg:flex-row mt-8">
                 <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 shadow-md flex justify-center items-center lg:min-h-70">
                     {seniorityHasData ?
                         (

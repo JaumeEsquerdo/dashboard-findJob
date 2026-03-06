@@ -16,8 +16,8 @@ const container: Variants = {
     hidden: {},
     show: {
         transition: {
-            delayChildren: 0.2,
-            staggerChildren: 0.2
+            delayChildren: 0.1,
+            staggerChildren: 0.08
         }
     }
 }
@@ -67,6 +67,7 @@ const About = () => {
                                         width={50}
                                         height={50}
                                         className="object-contain  w-12.5 h-12.5"
+                                        priority
                                     />
                                     <span className="absolute  -bottom-10/12 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-main text-white text-xs px-2 py-2 font-medium rounded-xl opacity-0 lg:group-hover:opacity-100 transition-opacity whitespace-nowrap z-20">
                                         {tech.name}

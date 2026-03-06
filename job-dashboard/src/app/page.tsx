@@ -10,14 +10,14 @@ import { Kpis } from "../components/Kpis";
 import { RenderJobs } from "../components/RenderJobs";
 import { FiltrosSelects } from "../components/FiltrosSelects";
 import { type Filters } from "../app/types/types";
-import { motion, AnimatePresence, type Variants } from 'framer-motion'
+import { motion, AnimatePresence, type Variants, LayoutGroup } from 'framer-motion'
 import { fetchJobs } from "./lib/api/fetchJobs";
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [jobs, setJobs] = useState<Job[]>([])
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [filters, setFilters] = useState<Filters>({
     search: '',
@@ -26,20 +26,39 @@ export default function Home() {
     remote: null
   })
 
-  useEffect(() => {
-    const loadJobs = async () => {
-      try {
-        const data = await fetchJobs()
-        setJobs(data)
-      } catch (err) {
-        setError(`Error en el fetch: ${err}`)
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadJobs()
-  }, [])
+  const [offset, setOffset] = useState(0); //cuantos ignora (y pasaa a mostrar los siguientes hasta el limite que digas)
+  const [hasMore, setHasMore] = useState(true);
 
+  const limit = 40; // cuantos jobs trae la API por fetch
+
+  // Función para cargar la página actual
+  const loadJobs = async () => {
+    if (!hasMore || loading) return; // evitar cargas duplicadas
+
+    setLoading(true);
+    try {
+      const newJobs = await fetchJobs(limit, offset);
+      console.log('newJobs:', newJobs);
+      setJobs(prev => [...prev, ...newJobs]); // sumamos nuevos jobs
+      setOffset(prev => prev + newJobs.length);
+
+      if (newJobs.length < limit) {
+        setHasMore(false); // no hay más jobs disponibles
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadJobs();
+  }, []);
+
+
+
+  /* filtro localizaciones unicas */
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
 
 
@@ -100,8 +119,8 @@ export default function Home() {
     hidden: {},
     show: {
       transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.2
+        delayChildren: 0.1,
+        staggerChildren: 0.08
       }
     }
   }
@@ -111,51 +130,53 @@ export default function Home() {
     show: { opacity: 1, y: 0 }
   }
   return (
-    <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6 overflow-x-hidden">
+    <div className="flex flex-col flex-1 min-h-full  lg:flex-row gap-6 overflow-x-hidden">
+      <LayoutGroup>
+        <motion.main
+          variants={container} initial={'hidden'} animate='show' className="flex flex-col flex-1 min-h-full bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+          <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
+            <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
+          </header>
 
-      <motion.main layout variants={container} initial='hidden' animate='show' className="flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
-        <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
-          <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
-        </header>
+          {/* onboarding */}
+          <AnimatePresence initial={false}>
+            {isOnboardingVisible && (
+              <motion.div layout variants={item}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 0 }} transition={{ duration: 0.4, ease: 'easeInOut' }} className="relative flex flex-col-reverse justify-between items-center p-4 lg:mt-6 rounded-2xl bg-whiteSpecial lg:flex-row lg:pr-8 lg:pl-8">
+                <div className="flex flex-col gap-5 justify-center items-center lg:items-start lg:max-w-1/2">
+                  <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Explora el mercado laboral tech en tiempo real</h2>
+                  <p>Este dashboard recopila y organiza ofertas de empleo del sector tecnológico para que puedas visualizar tendencias, tecnologías más demandadas y oportunidades activas.</p>
+                  <p>Filtra por stack, ubicación o modalidad y analiza el mercado con una perspectiva clara y estructurada.</p>
+                  <Button onClick={handleClose}>Entendido</Button>
+                </div>
 
-        {/* onboarding */}
-        <AnimatePresence>
-          {isOnboardingVisible && (
-            <motion.div variants={item}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 0 }} transition={{ duration: 0.4, ease: 'easeInOut' }} className="relative flex flex-col-reverse justify-between items-center p-4 lg:mt-6 rounded-2xl bg-whiteSpecial lg:flex-row lg:pr-8 lg:pl-8">
-              <div className="flex flex-col gap-5 justify-center items-center lg:items-start lg:max-w-1/2">
-                <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Explora el mercado laboral tech en tiempo real</h2>
-                <p>Este dashboard recopila y organiza ofertas de empleo del sector tecnológico para que puedas visualizar tendencias, tecnologías más demandadas y oportunidades activas.</p>
-                <p>Filtra por stack, ubicación o modalidad y analiza el mercado con una perspectiva clara y estructurada.</p>
-                <Button onClick={handleClose}>Entendido</Button>
-              </div>
-
-              <Image className="lg:absolute lg:top-20 lg:right-4 xl:-top-14 xl:right-8
+                <Image className="lg:absolute lg:top-20 lg:right-4 xl:-top-14 xl:right-8
               -translate-y-4 lg:-translate-y-12
               lg:w-70
-              xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" width={200} height={300} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+              xl:w-100 lg:h-auto" src={'/filtros-ilu.svg'} alt="Imagen de presentación" priority width={200} height={300} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* FILTROS */}
+          <FiltrosSelects variants={item} filters={filters} remoteJobsArray={remoteJobsArray} uniqueLocations={uniqueLocations} setFilters={setFilters} />
+
+          {/* KPIS render */}
 
 
+          <Kpis variants={item} avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
 
-        {/* FILTROS */}
-        <FiltrosSelects variants={item} filters={filters} remoteJobsArray={remoteJobsArray} uniqueLocations={uniqueLocations} setFilters={setFilters} />
 
-        {/* KPIS render */}
+          {/* MÉTRICAS */}
+          <Metricas variants={item} filteredJobs={filteredJobs} />
 
-        <Kpis variants={item} avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
+          {/* TABLA de RENDER JOBS */}
+          <RenderJobs loadJobs={loadJobs} hasMore={hasMore} loading={loading} variants={item} filteredJobs={filteredJobs} setSelectedJob={setSelectedJob} setSidebarOpen={setSidebarOpen} selectedJob={selectedJob} />
+          {/* Cargar más Jobs */}
 
-        {/* MÉTRICAS */}
-        <Metricas variants={item} filteredJobs={filteredJobs} />
-
-        {/* TABLA de RENDER JOBS */}
-        <RenderJobs variants={item} filteredJobs={filteredJobs} setSelectedJob={setSelectedJob} setSidebarOpen={setSidebarOpen} selectedJob={selectedJob} />
-
-      </motion.main >
-
+        </motion.main >
+      </LayoutGroup>
       <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} job={selectedJob} />
     </div >
   );
