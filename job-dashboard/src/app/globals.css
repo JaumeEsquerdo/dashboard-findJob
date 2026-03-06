@@ -19,7 +19,7 @@
   --color-main: #7163ba;
   --color-fondoColor: #9f9ac0; /* fondo de secciones secundarias */
   --color-navBarHover: #4a4a5755; /* hover sutil */
-  --color-whiteSpecial: #ececec;
+  --color-whiteSpecial: #ffffff;
 }
 
 @theme {
