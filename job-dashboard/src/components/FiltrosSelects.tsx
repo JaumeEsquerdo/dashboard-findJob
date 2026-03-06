@@ -175,6 +175,66 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants,
                                 </li>
                             )}
 
+                            {/* Europe */}
+                            {uniqueLocations
+                                .filter(loc => loc === "Europe")
+                                .map((loc) => (
+                                    <li
+                                        key={loc}
+                                        className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                        onClick={() => {
+                                            setFilters({ ...filters, location: loc })
+                                            setUbicationOpen(false)
+                                        }}
+                                    >
+                                        {loc}
+                                    </li>
+                                ))}
+                            {/* North America */}
+                            {uniqueLocations
+                                .filter(loc => loc === "North America")
+                                .map((loc) => (
+                                    <li
+                                        key={loc}
+                                        className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                        onClick={() => {
+                                            setFilters({ ...filters, location: loc })
+                                            setUbicationOpen(false)
+                                        }}
+                                    >
+                                        {loc}
+                                    </li>
+                                ))}
+                            {/* Asia */}
+                            {uniqueLocations
+                                .filter(loc => loc === "Asia")
+                                .map((loc) => (
+                                    <li
+                                        key={loc}
+                                        className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                        onClick={() => {
+                                            setFilters({ ...filters, location: loc })
+                                            setUbicationOpen(false)
+                                        }}
+                                    >
+                                        {loc}
+                                    </li>
+                                ))}
+                            {/* Worldwide */}
+                            {uniqueLocations
+                                .filter(loc => loc === "Worldwide")
+                                .map((loc) => (
+                                    <li
+                                        key={loc}
+                                        className="p-2 cursor-pointer hover:bg-main hover:text-white"
+                                        onClick={() => {
+                                            setFilters({ ...filters, location: loc })
+                                            setUbicationOpen(false)
+                                        }}
+                                    >
+                                        {loc}
+                                    </li>
+                                ))}
                             {/* Resto */}
                             {uniqueLocations
                                 .filter(loc => loc !== "Remote")
