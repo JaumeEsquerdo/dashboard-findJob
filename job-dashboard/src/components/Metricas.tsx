@@ -13,13 +13,15 @@ import {
     Sector
 } from "recharts"
 import { type Job, type Seniority } from "../app/types/types"
+import { motion, type Variants } from 'framer-motion'
+
 
 type Props = {
-
     filteredJobs: Job[]
+    variants: Variants
 }
 
-export const Metricas = ({ filteredJobs }: Props) => {
+export const Metricas = ({ filteredJobs, variants }: Props) => {
     const COLORS = ["#E1D7FF", "#BAA6FF", "#826DC7"]
     const seniorityOrder: Seniority[] = ["Junior", "Mid-level", "Senior"]
 
@@ -118,7 +120,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
             )
     return (
         <>
-            <div className="flex flex-col w-auto gap-6 h-fit lg:flex-row mt-8">
+            <motion.div variants={variants} className="flex flex-col w-auto gap-6 h-fit lg:flex-row mt-8">
                 <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 shadow-md flex justify-center items-center lg:min-h-70">
 
                     {seniorityHasData ?
@@ -226,7 +228,7 @@ export const Metricas = ({ filteredJobs }: Props) => {
                     }
 
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }

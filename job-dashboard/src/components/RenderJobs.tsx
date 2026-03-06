@@ -3,14 +3,17 @@ import { useHelper } from "../context/useHelper";
 import { useEffect, useRef } from "react";
 import { useScroll } from "../context/useScrollContext";
 import { Button } from "./Button";
+import { motion, type Variants } from 'framer-motion'
+
 type Props = {
     selectedJob: Job | null
     filteredJobs: Job[]
     setSelectedJob: (job: Job) => void
     setSidebarOpen: (boolean: boolean) => void
+    variants: Variants
 }
 
-export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selectedJob }: Props) => {
+export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selectedJob, variants }: Props) => {
     const ref = useRef<HTMLDivElement | null>(null)
     const { step, endGuide } = useHelper()
     const { activeStep, setActiveStep } = useScroll()
@@ -23,7 +26,7 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
 
     return (
         <>
-            <div ref={ref} className="relative overflow-x-auto min-h-fit mt-8 rounded-2xl bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+            <motion.div variants={variants} ref={ref} className="relative overflow-x-auto min-h-fit mt-8 rounded-2xl bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
                 {step === 3 && (
                     <div className="absolute top-20 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-12 lg:gap-4">
                         <p>Y aquí verás todos los trabajos, o los filtrados. Clicando puedes consultar más detalles y solicitar empleo en su página web donde se ha subido la candidatura.</p>
@@ -73,7 +76,7 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
                         )}
                     </tbody>
                 </table>
-            </div>
+            </motion.div>
         </>
     );
 }

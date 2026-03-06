@@ -1,16 +1,18 @@
 import Image from "next/image";
+import { motion, type Variants } from 'framer-motion'
 
 type Props = {
     totalJobs: number
     remotePercentage: number
     avgSalary: number
+    variants: Variants
 }
 
-export const Kpis = ({ totalJobs, remotePercentage, avgSalary }: Props) => {
+export const Kpis = ({ totalJobs, remotePercentage, avgSalary, variants }: Props) => {
 
     return (
 
-        <div className="grid grid-cols-1 grid- md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <motion.div variants={variants} className="grid grid-cols-1 grid- md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {/* trabajos totales */}
             <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
                 <div className="flex flex-col justify-between">
@@ -33,7 +35,7 @@ export const Kpis = ({ totalJobs, remotePercentage, avgSalary }: Props) => {
                 </div>
                 <Image src="/icono-salario.svg" alt="icono búsqueda trabajo" width={80} height={80} />
             </div>
-        </div>
+        </motion.div>
 
     );
 }

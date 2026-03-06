@@ -4,14 +4,16 @@ import { useHelper } from "../context/useHelper";
 import { useScroll } from "../context/useScrollContext";
 import { useRef, useEffect, useState } from "react";
 import { Button } from "./Button";
+import { motion, type Variants } from 'framer-motion'
 
 type Props = {
     filters: Filters
     uniqueLocations: string[]
     setFilters: (filter: Filters) => void
+    variants: Variants
 }
 
-export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) => {
+export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants }: Props) => {
     const { step, nextStep, endGuide } = useHelper()
     const { setActiveStep, activeStep } = useScroll()
     const [experienceOpen, setExperienceOpen] = useState(false)
@@ -50,7 +52,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
 
 
     return (
-        <div ref={ref} className="relative flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
+        <motion.div variants={variants} ref={ref} className="relative flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
             {step === 2 && (
                 <div className="absolute top-32 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-18 lg:gap-4">
                     <p>Aquí puedes filtrar tanto por palabras clave como por experiencia y/o ubicación.</p>
@@ -191,7 +193,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters }: Props) 
                 </div>
             </div>
 
-        </div >
+        </motion.div >
 
     );
 }

@@ -1,4 +1,6 @@
+'use client'
 import Image from "next/image";
+import { motion, type Variants } from 'framer-motion'
 
 const techs = [
     { name: "React", icon: "/react.svg" },
@@ -10,14 +12,29 @@ const techs = [
     { name: 'Figma', icon: '/figma.svg' },
 ];
 
+const container: Variants = {
+    hidden: {},
+    show: {
+        transition: {
+            delayChildren: 0.2,
+            staggerChildren: 0.2
+        }
+    }
+}
+
+const item: Variants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 }
+}
+
 const About = () => {
     return (
-        <main className="flex flex-col justify-between flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-6 overflow-y-auto scrollbar-hidden overflow-x-hidden">
-            <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
+        <motion.main variants={container} initial='hidden' animate='show' className="flex flex-col justify-between flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-6 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+            <motion.header variants={item} className="flex flex-col justify-between items-center gap-4 lg:flex-row">
                 <h2 className="font-medium text-4xl text-textColor">Sobre nosotros</h2>
-            </header>
+            </motion.header>
 
-            <div className="relative flex flex-col rounded-2xl bg-whiteSpecial lg:pr-8 lg:pl-8">
+            <motion.div variants={item} className="relative flex flex-col rounded-2xl bg-whiteSpecial lg:pr-8 lg:pl-8">
 
                 <div className="flex flex-col gap-4 justify-center items-center lg:items-start p-4 lg:max-w-1/2">
                     <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Análisis del mercado laboral tech en tiempo real</h2>
@@ -34,10 +51,10 @@ const About = () => {
                     <p>El mercado laboral tecnológico cambia constantemente y muchas veces la información sobre tendencias, tecnologías demandadas o tipos de puestos aparece dispersa en diferentes portales de empleo. Este proyecto surge con la idea de reunir y estructurar esos datos para poder analizarlos de forma más clara.</p>
                     <p>A través de la integración con APIs públicas de empleo, la plataforma busca centralizar información sobre ofertas tecnológicas y convertirla en visualizaciones que permitan entender mejor cómo evoluciona la demanda de perfiles tech.</p>
                 </div>
-            </div>
+            </motion.div>
 
 
-            <div className="flex flex-col gap-4 lg:flex-row">
+            <motion.div variants={item} className="flex flex-col gap-4 lg:flex-row">
                 <div className="relative flex flex-col w-full justify-between items-center p-4 rounded-2xl bg-whiteSpecial lg:p-8 lg:min-h-50">
                     <h2 className="text-center text-xl  font-medium text-textColor lg:text-start">Stack técnico de la creación de la web</h2>
                     <div className="flex flex-wrap justify-center items-center gap-2">
@@ -83,8 +100,8 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </main >
+            </motion.div>
+        </motion.main >
     );
 }
 

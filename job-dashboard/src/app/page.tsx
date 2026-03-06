@@ -10,7 +10,7 @@ import { Kpis } from "../components/Kpis";
 import { RenderJobs } from "../components/RenderJobs";
 import { FiltrosSelects } from "../components/FiltrosSelects";
 import { type Filters } from "../app/types/types";
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -69,10 +69,24 @@ export default function Home() {
     totalJobs === 0 ?
       0 : Math.round(filteredJobs.reduce((acc, job) => acc + job.salary_min, 0) / totalJobs)
 
+  const container: Variants = {
+    hidden: {},
+    show: {
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.2
+      }
+    }
+  }
+
+  const item: Variants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 }
+  }
   return (
     <div className="flex flex-col flex-1 min-h-0  lg:flex-row gap-6 overflow-x-hidden">
 
-      <motion.main layout className="flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+      <motion.main variants={container} initial='hidden' animate='show' layout className="flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
         <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
           <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
         </header>
@@ -80,7 +94,7 @@ export default function Home() {
         {/* onboarding */}
         <AnimatePresence>
           {isOnboardingVisible && (
-            <motion.div exit={{ opacity: 0.4 }} transition={{ duration: 0.2 }} className="relative flex flex-col-reverse justify-between items-center p-4 lg:mt-6 rounded-2xl bg-whiteSpecial lg:flex-row lg:pr-8 lg:pl-8">
+            <motion.div variants={item} exit={{ opacity: 0.4 }} transition={{ duration: 0.2 }} className="relative flex flex-col-reverse justify-between items-center p-4 lg:mt-6 rounded-2xl bg-whiteSpecial lg:flex-row lg:pr-8 lg:pl-8">
               <div className="flex flex-col gap-5 justify-center items-center lg:items-start lg:max-w-1/2">
                 <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Explora el mercado laboral tech en tiempo real</h2>
                 <p>Este dashboard recopila y organiza ofertas de empleo del sector tecnológico para que puedas visualizar tendencias, tecnologías más demandadas y oportunidades activas.</p>
@@ -97,17 +111,17 @@ export default function Home() {
         </AnimatePresence>
 
         {/* FILTROS */}
-        <FiltrosSelects filters={filters} uniqueLocations={uniqueLocations} setFilters={setFilters} />
+        <FiltrosSelects variants={item} filters={filters} uniqueLocations={uniqueLocations} setFilters={setFilters} />
 
         {/* KPIS render */}
 
-        <Kpis avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
+        <Kpis variants={item} avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
 
         {/* MÉTRICAS */}
-        <Metricas filteredJobs={filteredJobs} />
+        <Metricas variants={item} filteredJobs={filteredJobs} />
 
         {/* TABLA de RENDER JOBS */}
-        <RenderJobs filteredJobs={filteredJobs} setSelectedJob={setSelectedJob} setSidebarOpen={setSidebarOpen} selectedJob={selectedJob} />
+        <RenderJobs variants={item} filteredJobs={filteredJobs} setSelectedJob={setSelectedJob} setSidebarOpen={setSidebarOpen} selectedJob={selectedJob} />
       </motion.main >
 
       <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} job={selectedJob} />
