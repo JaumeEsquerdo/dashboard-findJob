@@ -187,12 +187,27 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                                         const { payload } = props
                                         return (
                                             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                                                {payload?.map((entry, index) => (
-                                                    <li key={`item-${index}`} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                                        <div style={{ width: 12, height: 12, backgroundColor: COLORS[index % COLORS.length] }} />
-                                                        <span>{entry.value}</span>
-                                                    </li>
-                                                ))}
+                                                {payload?.map((entry, index) => {
+                                                    // Buscar el índice real en remoteData para asignar el color correcto
+                                                    const colorIndex = remoteData.findIndex(
+                                                        (item) => item.name === entry.value
+                                                    );
+                                                    return (
+                                                        <li
+                                                            key={`item-${index}`}
+                                                            style={{ display: "flex", alignItems: "center", gap: 6 }}
+                                                        >
+                                                            <div
+                                                                style={{
+                                                                    width: 12,
+                                                                    height: 12,
+                                                                    backgroundColor: COLORS[colorIndex % COLORS.length],
+                                                                }}
+                                                            />
+                                                            <span>{entry.value}</span>
+                                                        </li>
+                                                    );
+                                                })}
                                             </ul>
                                         )
                                     }}
