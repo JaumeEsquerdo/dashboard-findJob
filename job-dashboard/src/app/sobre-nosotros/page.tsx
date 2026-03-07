@@ -59,7 +59,7 @@ const item: Variants = {
 
 const About = () => {
     return (
-        <motion.main variants={container} initial='hidden' animate='show' className="flex flex-col justify-between flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-6 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+        <motion.main variants={container} initial='hidden' animate='show' className="flex flex-col justify-between flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-6 overflow-y-auto scrollbar-hidden overflow-x-hidden SobreNosotrosDiv">
             <motion.header variants={item} className="flex flex-col justify-between items-center gap-4 lg:flex-row">
                 <h2 className="font-medium text-4xl text-textColor">Sobre nosotros</h2>
             </motion.header>

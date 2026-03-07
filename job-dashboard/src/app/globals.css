@@ -63,8 +63,12 @@ body,
   scrollbar-color: var(--color-main) transparent;
 }
 
-:focus-visible {
+:focus {
   outline: 2px solid #7163ba;
+}
+
+:focus.SobreNosotrosDiv {
+  outline: none;
 }
 
 /* para el description que viene de la API */
@@ -75,4 +79,8 @@ body,
 
 .prose li {
   margin-bottom: 0.5rem;
+}
+
+body {
+  color: var(--color-textColor);
 }

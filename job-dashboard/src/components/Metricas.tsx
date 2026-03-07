@@ -127,8 +127,8 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                 <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65 shadow-md flex justify-center items-center lg:min-h-70">
                     {seniorityHasData ?
                         (
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={seniorityData} margin={{ top: 10, right: 20, left: 10, bottom: 10 }} >
+                            <ResponsiveContainer width="100%" aspect={1.5}>
+                                <BarChart data={seniorityData} margin={{ top: 10, right: 28, left: 10, bottom: 10 }} >
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="level" />
                                     <YAxis width={32} />
@@ -153,8 +153,8 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                 <div className="bg-white rounded-2xl w-full lg:w-1/2 min-h-65  shadow-md flex justify-center items-center lg:min-h-70">
 
                     {hasData ? (
-                        <ResponsiveContainer width="100%" height="100%">
-                            <PieChart margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
+                        <ResponsiveContainer width="100%" aspect={1.5}>
+                            <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
                                 <Pie
                                     data={remoteData}
                                     dataKey="value"
@@ -224,9 +224,9 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                 <div className="bg-white rounded-2xl w-full lg:w-1/2  min-h-65 flex shadow-md justify-center items-center lg:min-h-70">
                     {
                         senioritySalaryData.length > 0 ? (
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ResponsiveContainer width="100%" aspect={1.5}>
                                 <LineChart data={senioritySalaryData}
-                                    margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
+                                    margin={{ top: 10, right: 28, left: 10, bottom: 10 }}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="seniority" />
                                     <YAxis />

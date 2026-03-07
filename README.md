@@ -73,7 +73,7 @@ Además, hay un **tutorial paso a paso de 4 pasos** que te guía por:
 
 - Detecta automáticamente la preferencia del sistema
 - Permite cambiarlo manualmente
-- La preferencia se guarda en **localStorage**
+- La preferencia se guarda en **sessionStorage**
 
 ---
 

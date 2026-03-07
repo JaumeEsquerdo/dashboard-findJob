@@ -17,7 +17,7 @@
  * - `loading`, `hasMore`, `offset` (paginación y carga)
  * 
  * Otros:
- * - Onboarding inicial con localStorage (una vez).
+ * - Onboarding inicial con sessionStorage (una vez).
  * - Animaciones con Framer Motion.
  * - Botón "volver arriba" al hacer scroll.
  * 
@@ -98,9 +98,9 @@ export default function Home() {
   /* filtro localizaciones unicas */
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
 
-  /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en localStorage. */
+  /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en sessionStorage. */
   useEffect(() => {
-    const seen = localStorage.getItem("onboardingSeen");
+    const seen = sessionStorage.getItem("onboardingSeen");
     console.log('seen:', seen)
     if (!seen) {
       setIsOnboardingVisible(true); // solo se muestra en cliente
@@ -108,7 +108,7 @@ export default function Home() {
   }, []);
 
   const handleClose = () => {
-    localStorage.setItem("onboardingSeen", "true")
+    sessionStorage.setItem("onboardingSeen", "true")
     setIsOnboardingVisible(false)
   }
 
