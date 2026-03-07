@@ -1,6 +1,21 @@
 import { ApiJob } from "../schemas/job.schema";
 import { type Job } from "../../types/types";
 
+/**
+ * Convierte (mapea) un Job recibido desde la API externa
+ * al modelo interno `Job` que utiliza nuestra aplicación.
+ *
+ * Esto es útil porque:
+ * - Las APIs externas suelen tener estructuras distintas a las nuestras.
+ * - Nos permite normalizar nombres de campos y tipos.
+ * - Evita que el resto de la app dependa directamente del formato de la API.
+ *
+ * Recibe:
+ *  - apiJob: un job ya validado por Zod con el tipo `ApiJob`.
+ *
+ * Devuelve:
+ *  - un objeto con la estructura `Job` que usa nuestra aplicación.
+ */
 export function mapApiJobToJob(apiJob: ApiJob): Job {
   return {
     id: apiJob.guid,
