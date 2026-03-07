@@ -91,7 +91,7 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
 
                             {filteredJobs.length === 0 && (
                                 <tr>
-                                    <td className="p-6 text-center text-gray-500">
+                                    <td className="p-6 font-medium text-gray-500">
                                         No se han encontrado resultados
                                     </td>
                                 </tr>
