@@ -21,6 +21,29 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "App Dashboard de búsqueda de empleo tech",
   description: "App para encontrar empleos y ver las métricas principales del sector.",
+
+  authors: [{ name: "Jaume Esquerdo" }],
+  creator: "Jaume",
+
+  keywords: [
+    "empleo tech",
+    "dashboard empleo",
+    "tech jobs",
+    "developer jobs",
+    "job analytics"
+  ],
+
+  openGraph: {
+    title: "Dashboard de empleo tech",
+    description: "Analiza métricas del mercado laboral tech.",
+    type: "website",
+    url: 'https://find-job-dashboard.vercel.app/',
+    locale: "es_ES",
+  },
+
+  icons: {
+    icon: "/favicon-findJob.svg",
+  },
 };
 
 export default function RootLayout({
