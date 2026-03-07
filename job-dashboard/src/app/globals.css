@@ -63,7 +63,7 @@ body,
   scrollbar-color: var(--color-main) transparent;
 }
 
-:focus {
+:focus-visible {
   outline: 2px solid #7163ba;
 }
 

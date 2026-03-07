@@ -13,6 +13,7 @@ export type Job = {
     posted_at: Date
     description: string
     url: string
+    companyLogo?: string
 }
 
 export type Seniority = "Intern" | "Junior" | "Mid" | "Senior"

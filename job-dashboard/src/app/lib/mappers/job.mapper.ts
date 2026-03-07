@@ -32,5 +32,6 @@ export function mapApiJobToJob(apiJob: ApiJob): Job {
     posted_at: new Date(apiJob.pubDate * 1000),
     description: apiJob.description,
     url: apiJob.applicationLink,
+    companyLogo: apiJob.companyLogo || undefined,
   };
 }

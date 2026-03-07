@@ -1,6 +1,6 @@
 import { type Job } from "../app/types/types"
+import Image from "next/image"
 import { useHelper } from "../context/useHelper"
-import { useScroll } from "../context/useScrollContext"
 import { motion } from 'framer-motion'
 import DOMPurify from "dompurify"
 
@@ -13,7 +13,6 @@ interface sidebarProps {
 
 export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
     const { step, startGuide } = useHelper()
-    const { setActiveStep } = useScroll()
     return (
         <>
             {/* overlay clicable para cerrar sidebar */}
@@ -61,6 +60,14 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
 
                         <div className="flex flex-col gap-6">
                             <p><span className="font-medium">Compañia:</span> {job.company}</p>
+                            {job.companyLogo && (
+                                <Image
+                                    src={job.companyLogo}
+                                    alt={job.company}
+                                    width={40}
+                                    height={40}
+                                />
+                            )}
                             <p><span className="font-medium">Localización:</span> {job.location}</p>
                             <p><span className="font-medium">Experiencia:</span> {job.experience_level}</p>
                             <p><span className="font-medium">Salario:</span>   {job.salary_min > 0 ? <>{job.salary_min} - {job.salary_max} {job.currency}</> : 'No indican salario'}</p>
