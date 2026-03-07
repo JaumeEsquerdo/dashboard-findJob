@@ -214,7 +214,7 @@ Los datos de empleo provienen de la **API pública de Empllo**, especializada en
 **Jaume Esquerdo**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-666666?logo=linkedin&logoColor=white&style=for-the-badge)](https://www.linkedin.com/in/jaume-esquerdo/)
-[![Github](https://img.shields.io/badge/Portfolio-666666?logo=firefox&logoColor=white&style=for-the-badge)](https://github.com/JaumeEsquerdo)
+[![Github](https://img.shields.io/badge/Github-666666?logo=firefox&logoColor=white&style=for-the-badge)](https://github.com/JaumeEsquerdo)
 [![Portfolio](https://img.shields.io/badge/Portfolio-666666?logo=firefox&logoColor=white&style=for-the-badge)](https://portfolio-jaume-esquerdo.vercel.app/)
 
 ---
