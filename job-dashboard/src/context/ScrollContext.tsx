@@ -1,3 +1,8 @@
+/**
+ * Contexto para gestionar el estado de navegación de los pasos para poder realizar scroll en cada uno de ellos.
+ * Permite sincronizar qué sección o "paso" está activo globalmente, 
+ * facilitando la comunicación entre componentes de navegación y secciones de contenido.
+ */
 'use client'
 import { ReactNode, createContext, useState } from 'react'
 

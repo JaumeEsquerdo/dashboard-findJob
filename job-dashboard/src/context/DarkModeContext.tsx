@@ -1,3 +1,5 @@
+/** Contexto para manejar el modo oscuro (dark mode) de la app, con persistencia en localStorage y detección de la preferencia del sistema
+ */
 'use client'
 
 import { createContext, useState, useEffect, ReactNode } from 'react'

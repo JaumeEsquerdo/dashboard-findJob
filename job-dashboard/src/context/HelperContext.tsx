@@ -1,3 +1,8 @@
+/**
+ * Contexto encargado de gestionar el estado de la guía interactiva (onboarding) del usuario.
+ * Controla la navegación entre pasos y asegura que el usuario esté en la ruta correcta al iniciar.
+ */
+
 'use client'
 
 import { createContext, useState, ReactNode } from 'react'

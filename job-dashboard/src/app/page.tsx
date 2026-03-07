@@ -1,47 +1,31 @@
 /**
- * ============================
  * DASHBOARD PAGE (Home)
- * ============================
- * Página principal del dashboard que muestra ofertas de empleo tech
- * obtenidas desde la API y permite analizarlas mediante filtros y métricas.
- *
- * Funcionalidades principales:
- * - Obtiene jobs desde la API mediante `fetchJobs` usando paginación (limit + offset).
- * - Permite filtrar las ofertas por:
- *    • búsqueda (título o empresa)
- *    • nivel de experiencia
- *    • ubicación
- *    • modalidad remota
- * - Calcula KPIs del mercado laboral filtrado:
- *    • total de ofertas
- *    • porcentaje de trabajos remotos
- *    • salario medio
- * - Muestra métricas y visualizaciones basadas en los resultados filtrados.
- * - Renderiza una tabla/listado de ofertas (`RenderJobs`) con carga progresiva.
- * - Permite abrir un sidebar con el detalle del job seleccionado.
- *
- * Estados principales:
- * - jobs: lista completa de ofertas cargadas desde la API
- * - filteredJobs: lista de ofertas tras aplicar los filtros
- * - filters: estado de filtros activos
- * - selectedJob: job seleccionado para mostrar en el sidebar
- * - sidebarOpen: controla visibilidad del sidebar
- * - loading / hasMore / offset: control de paginación y carga de datos
- *
- * Otros comportamientos:
- * - Onboarding inicial mostrado solo una vez usando localStorage
- * - Animaciones con Framer Motion
- * - Botón para volver arriba cuando el usuario hace scroll
- *
- * Componentes principales utilizados:
- * - FiltrosSelects → filtros del dashboard
- * - Kpis → indicadores clave del mercado
- * - Metricas → visualización de datos
- * - RenderJobs → listado de ofertas
- * - Sidebar → detalle de la oferta seleccionada
- *
+ * 
+ * Página principal del dashboard de ofertas de empleo tech.
+ * Obtiene datos de la API y permite analizarlos con filtros y métricas.
+ * 
+ * Funcionalidades:
+ * - Fetch de jobs con paginación (`limit` + `offset`) vía `fetchJobs`.
+ * - Filtros: búsqueda (título/empresa), experiencia, ubicación, remoto.
+ * - KPIs: total de ofertas, % remoto, salario medio.
+ * - Visualización de métricas y gráficos.
+ * - Renderizado de listado de ofertas (`RenderJobs`) con carga progresiva.
+ * - Sidebar con detalle del job seleccionado.
+ * 
+ * Estados:
+ * - `jobs`, `filteredJobs`, `filters`, `selectedJob`, `sidebarOpen`
+ * - `loading`, `hasMore`, `offset` (paginación y carga)
+ * 
+ * Otros:
+ * - Onboarding inicial con localStorage (una vez).
+ * - Animaciones con Framer Motion.
+ * - Botón "volver arriba" al hacer scroll.
+ * 
+ * Componentes clave:
+ * - `FiltrosSelects`, `Kpis`, `Metricas`, `RenderJobs`, `Sidebar`
+ * 
  * Tecnologías:
- * Next.js (App Router) + React + TypeScript + Framer Motion
+ * Next.js (App Router), React, TypeScript, Framer Motion
  */
 
 'use client'
@@ -67,6 +51,7 @@ export default function Home() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
   const [loading, setLoading] = useState(false)
+  const [isOnboardingVisible, setIsOnboardingVisible] = useState(false);
   const [error, setError] = useState<string | null>(null)
   const mainRef = useRef<HTMLElement>(null);
   const [filters, setFilters] = useState<Filters>({
@@ -103,23 +88,32 @@ export default function Home() {
   };
 
   useEffect(() => {
-    loadJobs();
+    if (jobs.length === 0) {  // solo carga si no hay jobs (para evitar problemas enntre navegación)
+      setOffset(0);
+      setHasMore(true);
+      loadJobs();
+    }
   }, []);
 
   /* filtro localizaciones unicas */
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
 
-
   /* Evita error en SSR(servidor) (donde no hay window). En cliente, muestra onboarding si no existe "onboardingSeen" en localStorage. */
-  const [isOnboardingVisible, setIsOnboardingVisible] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return !localStorage.getItem("onboardingSeenN");
-  });
+  useEffect(() => {
+    const seen = localStorage.getItem("onboardingSeen");
+    console.log('seen:', seen)
+    if (!seen) {
+      setIsOnboardingVisible(true); // solo se muestra en cliente
+    }
+  }, []);
 
   const handleClose = () => {
     localStorage.setItem("onboardingSeen", "true")
     setIsOnboardingVisible(false)
   }
+
+
+
 
   /* filtrado del search */
   const filteredJobs = useMemo(() => {
