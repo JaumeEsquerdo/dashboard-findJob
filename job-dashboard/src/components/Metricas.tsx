@@ -128,7 +128,7 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                     {seniorityHasData ?
                         (
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={seniorityData}>
+                                <BarChart data={seniorityData} margin={{ top: 10, right: 20, left: 10, bottom: 10 }} >
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="level" />
                                     <YAxis width={32} />
@@ -154,7 +154,7 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
 
                     {hasData ? (
                         <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
+                            <PieChart margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
                                 <Pie
                                     data={remoteData}
                                     dataKey="value"
@@ -225,7 +225,8 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                     {
                         senioritySalaryData.length > 0 ? (
                             <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={senioritySalaryData}>
+                                <LineChart data={senioritySalaryData}
+                                    margin={{ top: 10, right: 20, left: 10, bottom: 10 }}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="seniority" />
                                     <YAxis />
