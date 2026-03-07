@@ -1,3 +1,61 @@
+/**
+ * ============================
+ * ABOUT PAGE (Sobre nosotros)
+ * ============================
+ * Página informativa que explica el propósito de la plataforma,
+ * el stack técnico utilizado y las fuentes de datos del proyecto.
+ *
+ * Objetivo:
+ * - Presentar el contexto del proyecto y su utilidad para analizar
+ *   el mercado laboral tecnológico.
+ * - Explicar la tecnología utilizada para construir la aplicación.
+ * - Mostrar créditos de la API utilizada y enlaces al perfil profesional del desarrollador.
+ *
+ * Secciones principales:
+ *
+ * 1. Introducción del proyecto
+ *    - Explica el propósito del dashboard: analizar el mercado laboral tech
+ *      mediante datos reales obtenidos desde la API de Empllo.
+ *    - Describe cómo la plataforma transforma datos en una experiencia
+ *      visual e interactiva mediante filtros y análisis.
+ *
+ * 2. Motivación de la plataforma
+ *    - Justifica el uso de la herramienta para simplificar la búsqueda
+ *      de empleo en el sector tecnológico.
+ *    - Destaca la visualización de tendencias y la toma de decisiones
+ *      basada en datos.
+ *
+ * 3. Stack técnico
+ *    - Muestra las tecnologías utilizadas para desarrollar la aplicación.
+ *    - Las tecnologías se renderizan dinámicamente a partir del array `techs`.
+ *    - Cada tecnología muestra su icono y nombre (tooltip en desktop,
+ *      nombre visible en móvil).
+ *
+ * 4. API y créditos
+ *    - Indica la fuente de los datos utilizados en la plataforma.
+ *    - Incluye enlace a la API pública de Empllo.
+ *
+ * 5. Perfil del desarrollador
+ *    - Enlaces externos a:
+ *        • LinkedIn
+ *        • GitHub
+ *        • Portfolio personal
+ *
+ * Animaciones:
+ * - Se utilizan animaciones con Framer Motion para la entrada
+ *   progresiva de los elementos.
+ * - `container` controla el stagger de los hijos.
+ * - `item` define la animación de aparición (opacity + desplazamiento).
+ *
+ * Otros comportamientos:
+ * - Diseño responsive optimizado con Tailwind CSS.
+ * - Uso de `next/image` para optimización de imágenes.
+ * - Tooltips en desktop mediante clases `group-hover`.
+ *
+ * Tecnologías:
+ * Next.js (App Router) + React + TypeScript + Tailwind CSS + Framer Motion
+ */
+
 'use client'
 import Image from "next/image";
 import { motion, type Variants } from 'framer-motion'

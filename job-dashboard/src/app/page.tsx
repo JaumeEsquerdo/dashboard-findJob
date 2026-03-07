@@ -1,3 +1,49 @@
+/**
+ * ============================
+ * DASHBOARD PAGE (Home)
+ * ============================
+ * Página principal del dashboard que muestra ofertas de empleo tech
+ * obtenidas desde la API y permite analizarlas mediante filtros y métricas.
+ *
+ * Funcionalidades principales:
+ * - Obtiene jobs desde la API mediante `fetchJobs` usando paginación (limit + offset).
+ * - Permite filtrar las ofertas por:
+ *    • búsqueda (título o empresa)
+ *    • nivel de experiencia
+ *    • ubicación
+ *    • modalidad remota
+ * - Calcula KPIs del mercado laboral filtrado:
+ *    • total de ofertas
+ *    • porcentaje de trabajos remotos
+ *    • salario medio
+ * - Muestra métricas y visualizaciones basadas en los resultados filtrados.
+ * - Renderiza una tabla/listado de ofertas (`RenderJobs`) con carga progresiva.
+ * - Permite abrir un sidebar con el detalle del job seleccionado.
+ *
+ * Estados principales:
+ * - jobs: lista completa de ofertas cargadas desde la API
+ * - filteredJobs: lista de ofertas tras aplicar los filtros
+ * - filters: estado de filtros activos
+ * - selectedJob: job seleccionado para mostrar en el sidebar
+ * - sidebarOpen: controla visibilidad del sidebar
+ * - loading / hasMore / offset: control de paginación y carga de datos
+ *
+ * Otros comportamientos:
+ * - Onboarding inicial mostrado solo una vez usando localStorage
+ * - Animaciones con Framer Motion
+ * - Botón para volver arriba cuando el usuario hace scroll
+ *
+ * Componentes principales utilizados:
+ * - FiltrosSelects → filtros del dashboard
+ * - Kpis → indicadores clave del mercado
+ * - Metricas → visualización de datos
+ * - RenderJobs → listado de ofertas
+ * - Sidebar → detalle de la oferta seleccionada
+ *
+ * Tecnologías:
+ * Next.js (App Router) + React + TypeScript + Framer Motion
+ */
+
 'use client'
 import Image from "next/image";
 import { useState, useMemo, useEffect, useRef } from "react";
