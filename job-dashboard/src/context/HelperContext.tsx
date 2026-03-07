@@ -2,7 +2,7 @@
 
 import { createContext, useState, ReactNode } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-type Step = 1 | 2 | 3 | null
+type Step = 1 | 2 | 3 | 4 | null
 
 
 interface HelperContext {
@@ -33,7 +33,8 @@ export const HelperProvider = ({ children }: { children: ReactNode }) => {
         setStep((prev) => {
             if (prev === 1) return 2
             if (prev === 2) return 3
-            if (prev === 3) return null
+            if (prev === 3) return 4
+            if (prev === 4) return null
             return null
         })
     }

@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Sidebar } from "../components/Sidebar";
 import { Button } from "../components/Button";
 import { type Job } from "./types/types";
@@ -12,13 +12,17 @@ import { FiltrosSelects } from "../components/FiltrosSelects";
 import { type Filters } from "../app/types/types";
 import { motion, AnimatePresence, type Variants, LayoutGroup } from 'framer-motion'
 import { fetchJobs } from "./lib/api/fetchJobs";
+import { ArrowUp } from "lucide-react"
+
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false)
   const [jobs, setJobs] = useState<Job[]>([])
   const [selectedJob, setSelectedJob] = useState<Job | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const mainRef = useRef<HTMLElement>(null);
   const [filters, setFilters] = useState<Filters>({
     search: '',
     experience: '',
@@ -55,8 +59,6 @@ export default function Home() {
   useEffect(() => {
     loadJobs();
   }, []);
-
-
 
   /* filtro localizaciones unicas */
   const uniqueLocations = [...new Set(jobs.map(job => job.location))]
@@ -129,11 +131,38 @@ export default function Home() {
     hidden: { opacity: 0, y: 10 },
     show: { opacity: 1, y: 0 }
   }
+
+  /* useEffect para detectar cuando mostrar btn para vovler arriba (por scroll) */
+  useEffect(() => {
+    const mainEl = mainRef.current;
+    if (!mainEl) return;
+
+    const handleScroll = () => {
+      if (mainEl.scrollTop > 600) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    }
+
+    mainEl.addEventListener("scroll", handleScroll);
+    return () => mainEl.removeEventListener("scroll", handleScroll);
+  }, [])
+
+  const scrollToTop = () => {
+    if (mainRef.current) {
+      mainRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
   return (
     <div className="flex flex-col flex-1 min-h-full  lg:flex-row gap-6 overflow-x-hidden">
       <LayoutGroup>
-        <motion.main
-          variants={container} initial={'hidden'} animate='show' className="flex flex-col flex-1 min-h-full bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+        <motion.main ref={mainRef}
+          variants={container} initial={'hidden'} animate='show' className=" relative flex flex-col flex-1 min-h-full bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
+
+
+
           <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
             <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
           </header>
@@ -163,8 +192,6 @@ export default function Home() {
           <FiltrosSelects variants={item} filters={filters} remoteJobsArray={remoteJobsArray} uniqueLocations={uniqueLocations} setFilters={setFilters} />
 
           {/* KPIS render */}
-
-
           <Kpis variants={item} avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
 
 
@@ -176,8 +203,22 @@ export default function Home() {
           {/* Cargar más Jobs */}
 
         </motion.main >
+
       </LayoutGroup>
       <Sidebar sidebarOpen={sidebarOpen} setOpen={setSidebarOpen} job={selectedJob} />
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            onClick={scrollToTop}
+            className=" cursor-pointer fixed bottom-6.5 right-1/4 md:right-1/5 lg:right-1/4 lg:bottom-11 z-50 bg-amber-200 p-3 rounded-full shadow-lg lg:hover:scale-105 lg:active:scale-95 transition duration-150"
+          >
+            <ArrowUp size={20} color="#7163ba" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div >
   );
 }

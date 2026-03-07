@@ -27,7 +27,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants,
 
     useEffect(() => {
         if (activeStep === 2) {
-            ref.current?.scrollIntoView({ behavior: 'smooth' })
+            ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }
     }, [activeStep])
 
@@ -55,7 +55,7 @@ export const FiltrosSelects = ({ filters, uniqueLocations, setFilters, variants,
     return (
         <motion.div layout variants={variants} ref={ref} className="relative flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-center mt-8">
             {step === 2 && (
-                <div className="absolute top-32 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-18 lg:gap-4">
+                <div className="absolute top-32 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-16 lg:gap-4">
                     <p>Aquí puedes filtrar tanto por palabras clave como por experiencia y/o ubicación.</p>
                     <Button className="w-full" bgColor="bg-amber-100" onClick={() => {
                         nextStep()
