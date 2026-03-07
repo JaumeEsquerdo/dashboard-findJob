@@ -38,8 +38,8 @@ const About = () => {
 
                 <div className="flex flex-col gap-4 justify-center items-center lg:items-start p-4 lg:max-w-1/2">
                     <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Análisis del mercado laboral tech en tiempo real</h2>
-                    <p>Esta web muestra un Dashboard interactivo pensado para explorar el mercado laboral tecnológico a partir de datos estructurados de ofertas de empleo. Permite visualizar tendencias, tecnologías más demandadas y oportunidades activas mediante filtros por stack, ubicación o modalidad de trabajo.</p>
-                    <p>Actualmente los datos mostrados son simulados (mock data), utilizados para desarrollar y validar la estructura y las visualizaciones del dashboard. El objetivo es integrar próximamente datos reales a través de una API pública de empleo, permitiendo analizar el mercado tech con información actualizada.</p>
+                    <p>Esta web ofrece un Dashboard interactivo diseñado para explorar el ecosistema laboral tecnológico utilizando <b>datos reales y actualizados</b> de la API de Empllo.</p>
+                    <p>Nuestro objetivo es transformar el volumen de información del sector en una experiencia visual, fácil e interactiva. Mediante el procesado de datos, organizamos las ofertas de manera estructurada para que puedas filtrar por <b>stack, ubicación o años de experiencia</b> con total precisión.</p>
                 </div>
 
                 <Image className="static m-auto lg:absolute lg:top-1/2 lg:right-20
@@ -47,9 +47,9 @@ const About = () => {
                           lg:w-80
                           xl:w-100 lg:h-auto" src={'/business-ilu.svg'} alt="Imagen de presentación" width={300} height={400} />
                 <div className="flex flex-col gap-4 justify-center items-center lg:items-start p-4 lg:max-w-1/2">
-                    <h3 className="text-xl font-medium text-textColor ">¿Por qué esta web?</h3>
-                    <p>El mercado laboral tecnológico cambia constantemente y muchas veces la información sobre tendencias, tecnologías demandadas o tipos de puestos aparece dispersa en diferentes portales de empleo. Este proyecto surge con la idea de reunir y estructurar esos datos para poder analizarlos de forma más clara.</p>
-                    <p>A través de la integración con APIs públicas de empleo, la plataforma busca centralizar información sobre ofertas tecnológicas y convertirla en visualizaciones que permitan entender mejor cómo evoluciona la demanda de perfiles tech.</p>
+                    <h3 className="text-xl font-medium text-textColor ">¿Por qué utilizar esta plataforma?</h3>
+                    <p>Sabemos que buscar trabajo puede ser abrumador. Por eso, hemos optimizado la visualización de los datos para eliminar el ruido y que vayas directo al grano: encontrar el puesto que mejor se ajuste a tus necesidades y solicitarlo de forma inmediata.</p>
+                    <p>Gracias a la integración con la API de Empllo, centralizamos las mejores oportunidades tecnológicas, permitiéndote analizar tendencias y tomar decisiones informadas sobre tu carrera profesional de un solo vistazo.</p>
                 </div>
             </motion.div>
 

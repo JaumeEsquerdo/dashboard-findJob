@@ -31,10 +31,10 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
 
     /*scroll directo  para el paso 4 */
     useEffect(() => {
-        if (activeStep === 4) {
+        if (activeStep === 4 && filteredJobs.length > 0) {
             btnRef.current?.scrollIntoView({ behavior: 'smooth' })
         }
-    }, [activeStep])
+    }, [activeStep, filteredJobs.length])
 
     return (
         <>
@@ -43,11 +43,14 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
                     <div className="absolute top-20 left-6 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-12 lg:gap-4">
                         <p>Y aquí verás todos los trabajos, o los filtrados. Clicando puedes consultar más detalles y solicitar empleo en su página web donde se ha subido la candidatura.</p>
 
-                        <Button className="w-full" bgColor="bg-amber-100" onClick={() => {
-                            nextStep()
-                            setActiveStep(4)
-                        }
-                        }>Siguiente paso</Button><Button className="w-full" bgColor="bg-amber-200" onClick={() => {
+                        {filteredJobs.length > 0 && (
+                            <Button className="w-full" bgColor="bg-amber-100" onClick={() => {
+                                nextStep()
+                                setActiveStep(4)
+                            }
+                            }>Siguiente paso</Button>
+                        )}
+                        <Button className="w-full" bgColor="bg-amber-200" onClick={() => {
                             endGuide()
                             setActiveStep(0)
                         }}>Cerrar</Button>
@@ -95,21 +98,23 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
                             )}
                         </tbody>
                     </table>
-                    <div ref={btnRef} className={`relative flex justify-center my-8 ${step === 4 ? "pb-62" : ""}`}>
-                        {step === 4 && (
-                            <div className="absolute top-20 left-1/2 -translate-x-1/2 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-14 lg:gap-4">
-                                <p>Por último, si quieres ver más datos, al final de la lista de trabajos encontrarás
-                                    un botón para cargar más. Puedes seguir pulsándolo hasta ver todos los trabajos disponibles.</p>
-                                <Button className="w-full" bgColor="bg-amber-200" onClick={() => {
-                                    endGuide()
-                                    setActiveStep(0)
-                                }}>Cerrar</Button>
-                            </div>
-                        )}
-                        <Button onClick={loadJobs} disabled={loading || !hasMore}>
-                            {loading ? 'Cargando...' : hasMore ? 'Cargar más' : 'No hay más'}
-                        </Button>
-                    </div>
+                    {filteredJobs.length > 0 && (
+                        <div ref={btnRef} className={`relative flex justify-center my-8 ${step === 4 ? "pb-62" : ""}`}>
+                            {step === 4 && (
+                                <div className="absolute top-20 left-1/2 -translate-x-1/2 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl z-20 lg:top-14 lg:gap-4">
+                                    <p>Por último, si quieres ver más datos, al final de la lista de trabajos encontrarás
+                                        un botón para cargar más. Puedes seguir pulsándolo hasta ver todos los trabajos disponibles.</p>
+                                    <Button className="w-full" bgColor="bg-amber-200" onClick={() => {
+                                        endGuide()
+                                        setActiveStep(0)
+                                    }}>Cerrar</Button>
+                                </div>
+                            )}
+                            <Button onClick={loadJobs} disabled={loading || !hasMore}>
+                                {loading ? 'Cargando...' : hasMore ? 'Cargar más' : 'No hay más'}
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </motion.div>
         </>

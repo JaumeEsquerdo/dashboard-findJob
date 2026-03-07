@@ -19,13 +19,13 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
             {/* overlay clicable para cerrar sidebar */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+                    className="fixed inset-0 bg-black/40 z-60 lg:hidden"
                     onClick={() => setOpen(false)}
                 />
             )}
             <aside
                 className={`
-        fixed top-0 right-0 h-full w-2/3 bg-white z-50 rounded-tl-2xl rounded-bl-2xl lg:rounded-2xl flex flex-col justify-start 
+        fixed top-0 right-0 h-full w-2/3 bg-white z-70 rounded-tl-2xl rounded-bl-2xl lg:rounded-2xl flex flex-col justify-start 
         transform transition-transform duration-300
         ${sidebarOpen ? 'translate-x-0' : 'translate-x-full'}
         lg:static lg:translate-x-0 lg:h-auto lg:w-80
