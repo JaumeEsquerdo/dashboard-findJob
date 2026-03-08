@@ -6,7 +6,7 @@ Dashboard interactivo para explorar y analizar el mercado laboral tecnológico e
 
 # ¿Qué hace esta app?
 
-Al entrar, la aplicación carga automáticamente **ofertas de empleo del sector tecnológico** con **paginación progresiva** (puedes ir cargando más con un botón).
+Al entrar, la aplicación carga automáticamente **ofertas de empleo del sector tecnológico** con **paginación progresiva** (puedes ir cargando más con un botón) y con ordenación de tablas al clicar en el título de cada columna (por compañía, localización...).
 
 Puedes **filtrar las ofertas** por:
 
