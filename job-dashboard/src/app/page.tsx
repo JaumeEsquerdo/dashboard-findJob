@@ -216,7 +216,7 @@ export default function Home() {
                 <div className="flex flex-col gap-5 justify-center items-center lg:items-start lg:max-w-1/2">
                   <h2 className="text-center text-xl font-medium text-textColor lg:text-start">Explora el mercado laboral tech en tiempo real</h2>
                   <p>Este dashboard recopila y organiza ofertas de empleo del sector tecnológico para que puedas visualizar tendencias, tecnologías más demandadas y oportunidades activas.</p>
-                  <p>Filtra por stack, ubicación o modalidad y analiza el mercado con una perspectiva clara y estructurada.</p>
+                  <p>Filtra por nombre, experiencia o ubicación y analiza el mercado con una perspectiva clara y estructurada.</p>
                   <Button onClick={handleClose}>Entendido</Button>
                 </div>
 
