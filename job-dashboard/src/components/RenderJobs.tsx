@@ -1,6 +1,6 @@
 import { type Job } from "../app/types/types";
 import { useHelper } from "../context/useHelper";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useScroll } from "../context/useScrollContext";
 import { Button } from "./Button";
 import { motion, type Variants } from 'framer-motion'
@@ -21,6 +21,8 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
     const { step, endGuide, nextStep } = useHelper()
     const { activeStep, setActiveStep } = useScroll()
     const btnRef = useRef<HTMLDivElement | null>(null)
+    const [sortBy, setSortBy] = useState<string | null>(null)
+    const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
 
     /* scroll directo  para el paso 3 */
     useEffect(() => {
