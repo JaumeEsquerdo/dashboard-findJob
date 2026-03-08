@@ -146,7 +146,7 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                             </ResponsiveContainer>
                         )
                         :
-                        <p className="w-fit font-medium">No hay datos suficientes para comparar la experiencia</p>
+                        <p className="w-fit font-medium text-center p-4 text-gray-500">No hay datos suficientes para comparar la experiencia</p>
                     }
                 </div>
 
@@ -216,7 +216,7 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                         </ResponsiveContainer>
                     )
                         :
-                        <p className="w-fit font-medium">No hay datos suficientes para comparar trabajos 'remotos' con los 'in situ'</p>
+                        <p className="w-fit font-medium text-center p-4 text-gray-500">No hay datos suficientes para comparar trabajos 'remotos' con los 'in situ'</p>
                     }
 
                 </div>
@@ -241,7 +241,7 @@ export const Metricas = ({ filteredJobs, variants }: Props) => {
                                     />
                                 </LineChart>
                             </ResponsiveContainer>
-                        ) : <p className="w-fit font-medium">No hay datos suficientes para comparar por salarios</p>
+                        ) : <p className="w-fit font-medium text-center p-4 text-gray-500">No hay datos suficientes para comparar por salarios</p>
                     }
 
                 </div>
