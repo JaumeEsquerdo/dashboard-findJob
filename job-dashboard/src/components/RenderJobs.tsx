@@ -1,6 +1,6 @@
 import { type Job } from "../app/types/types";
 import { useHelper } from "../context/useHelper";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useScroll } from "../context/useScrollContext";
 import { Button } from "./Button";
 import { motion, type Variants } from 'framer-motion'
@@ -21,8 +21,70 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
     const { step, endGuide, nextStep } = useHelper()
     const { activeStep, setActiveStep } = useScroll()
     const btnRef = useRef<HTMLDivElement | null>(null)
-    const [sortBy, setSortBy] = useState<string | null>(null)
+    const [sortBy, setSortBy] = useState<keyof Job | null>(null)
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
+
+    /* PARAMS de ordenar columnas:
+    - sortBy (columna seleccionada)
+    - sortDir (dirección de orden) 
+    */
+
+    /* función para cambiar orden al clicar en la columna */
+    const handleSort = (column: keyof Job) => {
+        /* si la columna ya está siendo ordenada cambia de dirección */
+        if (sortBy === column) {
+            setSortDir(prev => prev === 'asc' ? 'desc' : 'asc')
+        } else {
+            /* si no, actualiza la columna q se está ordenada y empieza en ascendente */
+            setSortBy(column)
+            setSortDir('asc')
+        }
+    }
+
+    /* crear lista ordenada */
+    const sortedJobs = useMemo(() => {
+        if (!sortBy) return filteredJobs //devuelve sin ordenar si no está siendo ordenado
+
+        /* Se hace una copia de filteredJobs y valA y valB son los valores de la columna a ordenar en cada fila */
+        return [...filteredJobs].sort((a, b) => {
+
+            const valA = a[sortBy]
+            const valB = b[sortBy]
+
+            /* si alguno de los valores es null o undefined se pone al final de la tabla */
+            if (valA == null) return 1
+            if (valB == null) return -1
+
+            /* Para strings usamos localeCompare para ordenar alfabéticamente */
+            if (typeof valA === "string" && typeof valB === "string") {
+                return sortDir === "asc"
+                    ? valA.localeCompare(valB)
+                    : valB.localeCompare(valA)
+            }
+
+            /* Para números */
+            if (typeof valA === "number" && typeof valB === "number") {
+                // si es la columna de salario_min
+                if (sortBy === "salary_min") {
+                    // ponemos 0 al final en asc
+                    if (valA === 0) return 1
+                    if (valB === 0) return -1
+                }
+                return sortDir === "asc" ? valA - valB : valB - valA
+            }
+
+            /* Para booleanos (true / false), los convertimos a número (true = 1, false = 0): */
+            if (typeof valA === "boolean" && typeof valB === "boolean") {
+                return sortDir === "asc"
+                    ? Number(valB) - Number(valA)
+                    : Number(valA) - Number(valB)
+            }
+
+            /* valor por defecto */
+            return 0
+        })
+    }, [filteredJobs, sortBy, sortDir])
+
 
     /* scroll directo  para el paso 3 */
     useEffect(() => {
@@ -62,17 +124,17 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
                     <table className="min-w-full bg-white rounded-2xl">
                         <thead className="bg-background text-left ">
                             <tr >
-                                <th className="p-4 rounded-tl-2xl ">Título</th>
-                                <th className="p-4">Compañia</th>
-                                <th className="p-4">Localización</th>
-                                <th className="p-4">Nivel</th>
-                                <th className="p-4">Remoto</th>
-                                <th className="p-4 rounded-tr-2xl">Salario</th>
+                                <th onClick={() => handleSort("title")} className="cursor-pointer p-4 rounded-tl-2xl ">Título</th>
+                                <th onClick={() => handleSort("company")} className="cursor-pointer p-4">Compañia</th>
+                                <th onClick={() => handleSort("location")} className="cursor-pointer p-4">Localización</th>
+                                <th onClick={() => handleSort("experience_level")} className="cursor-pointer p-4">Nivel</th>
+                                <th onClick={() => handleSort("remote")} className="cursor-pointer p-4">Remoto</th>
+                                <th onClick={() => handleSort("salary_min")} className="cursor-pointer p-4 rounded-tr-2xl">Salario</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {filteredJobs && filteredJobs.map((job, index) => (
+                            {filteredJobs && sortedJobs.map((job, index) => (
                                 <tr key={`${job.id}-${index}`} onClick={() => {
                                     setSelectedJob(job)
                                     setSidebarOpen(true)
