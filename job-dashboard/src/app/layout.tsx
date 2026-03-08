@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Ubuntu, Fira_Code } from "next/font/google";
+import { Ubuntu, Manrope } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "../components/Navbar";
 import { DarkModeProvider } from "../context/DarkModeContext";
@@ -12,11 +12,11 @@ const ubuntu = Ubuntu({
   variable: "--font-ubuntu",
 });
 
-const firaCode = Fira_Code({
+const manrope = Manrope({
   subsets: ["latin"],
-  weight: ["400"], // Normalmente monospace no necesita bold
-  variable: "--font-fira-code",
+  variable: "--font-manrope",
 });
+
 
 export const metadata: Metadata = {
   title: "App Dashboard de búsqueda de empleo tech",
@@ -52,9 +52,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${ubuntu.variable} ${manrope.variable}`}>
       <body
-        className={`${ubuntu.variable} ${firaCode.variable} p-4 flex flex-col h-screen overflow-auto gap-6 bg-background font-sans antialiased lg:flex-row`}
+        className={`p-4 flex flex-col h-screen overflow-auto gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
         <HelperProvider>
           <ScrollProvider>

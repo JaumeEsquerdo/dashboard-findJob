@@ -204,7 +204,7 @@ export default function Home() {
 
 
           <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
-            <h2 className="font-medium text-4xl text-textColor">Dashboard</h2>
+            <h2 className="font-medium text-4xl text-textColor font-heading">Dashboard</h2>
           </header>
 
           {/* onboarding */}

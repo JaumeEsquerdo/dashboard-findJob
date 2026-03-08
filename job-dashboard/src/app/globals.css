@@ -32,8 +32,11 @@
   --color-navBarHover: var(--color-navBarHover);
   --color-whiteSpecial: var(--color-whiteSpecial);
 
-  --font-sans: var(--font-ubuntu), sans-serif;
-  --font-mono: var(--font-fira-code), monospace;
+  --font-sans: var(--font-manrope), sans-serif;
+}
+
+@utility font-heading {
+  font-family: var(--font-ubuntu), sans-serif;
 }
 
 html,

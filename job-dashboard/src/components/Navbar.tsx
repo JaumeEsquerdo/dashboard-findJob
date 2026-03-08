@@ -33,7 +33,7 @@ export const Navbar = () => {
 
     return (
         <nav className="flex justify-between items-center w-full rounded-2xl bg-main p-6 lg:flex-col lg:max-w-1/12">
-            <h1 className='text-white font-bold text-2xl'>findJob</h1>
+            <h1 className='text-white font-bold text-2xl font-heading'>findJob</h1>
             <ul className='flex flex-row gap-2 lg:flex-col  '>
                 {iconsNav.map((icon) => {
                     const isActive = icon.href === pathname
