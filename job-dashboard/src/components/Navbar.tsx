@@ -53,7 +53,7 @@ export const Navbar = () => {
             <ul className='flex gap-1 fixed bottom-6 right-4 bg-main p-2 z-20 rounded-xl shadow-lg lg:flex col lg:relative lg:shadow-none lg:right-auto lg:bottom-auto lg:gap-2'>
                 <li onClick={step === null ? startGuide : undefined} className={`relative`}>
                     {step === 1 && (
-                        <div className='absolute -top-60 -left-60 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl lg:left-0 lg:gap-4'>
+                        <div className='absolute -top-60 -left-52 w-70 sm:-left-60 p-6 flex flex-col gap-2 bg-amber-50 sm:w-80 shadow-lg rounded-2xl lg:left-0 lg:gap-4'>
                             <p>Para entender más el flow de la app sigue este pequeño tutorial.</p>
                             <Button className='w-full' bgColor='bg-amber-100' onClick={(e) => {
                                 e.stopPropagation()
