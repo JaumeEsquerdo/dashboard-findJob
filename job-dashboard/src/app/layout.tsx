@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: "Dashboard de empleo tech",
-    description: "Analiza métricas del mercado laboral tech.",
+    description: "Buscador de empleo tech con análisis de métricas del mercado laboral.",
     type: "website",
     url: 'https://find-job-dashboard.vercel.app/',
     locale: "es_ES",
