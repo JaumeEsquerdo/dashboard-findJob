@@ -186,7 +186,7 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
                     </table>
                 </div>
                 {filteredJobs.length > 0 && (
-                    <div ref={btnRef} className={`relative flex justify-center pb-30 my-8 ${step === 4 ? "pb-62" : ""}`}>
+                    <div ref={btnRef} className={`relative flex justify-center pb-30 my-8 ${step === 4 ? "pb-70" : ""}`}>
                         {step === 4 && (
                             <div className="absolute top-14 left-1/2 -translate-x-1/2 p-6 flex flex-col gap-2 bg-amber-50 w-80 shadow-lg rounded-2xl lg:top-14 lg:gap-4 z-99">
                                 <p>Por último, si quieres ver más datos, al final de la lista de trabajos encontrarás
