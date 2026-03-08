@@ -42,7 +42,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                 {!job && (
                     <>
                         <header className="flex flex-col items-center gap-2 mt-24 p-4 lg:p-6">
-                            <h3 className="font-medium text-xl">Detalles del trabajo</h3>
+                            <h3 className="font-semibold text-xl">Detalles del trabajo</h3>
                             <p className="text-center">Clica algún trabajo para ver los detalles</p>
                         </header>
                         <section className="flex flex-col gap-2 items-center mt-auto mb-20">
@@ -56,10 +56,10 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
 
                 {job && (
                     <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.4 }} className="flex flex-col gap-8 justify-start p-4 lg:p-6 mt-12 overflow-y-auto">
-                        <h2 className="font-medium text-xl text-left">{job.title}</h2>
+                        <h2 className="font-semibold text-xl text-left">{job.title}</h2>
 
                         <div className="flex flex-col gap-6">
-                            <p><span className="font-medium">Compañia:</span> {job.company}</p>
+                            <p><span className="font-semibold">Compañia:</span> {job.company}</p>
                             {job.companyLogo && (
                                 <Image
                                     src={job.companyLogo}
@@ -69,23 +69,23 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                                     className="rounded-md object-contain"
                                 />
                             )}
-                            <p><span className="font-medium">Localización:</span> {job.location}</p>
-                            <p><span className="font-medium">Experiencia:</span> {job.experience_level}</p>
-                            <p><span className="font-medium">Salario:</span>   {job.salary_min > 0 ? <>{job.salary_min} - {job.salary_max} {job.currency}</> : 'No indican salario'}</p>
-                            <p><span className="font-medium">Publicado el:</span> {job.posted_at.toLocaleDateString("es-ES")}</p>
+                            <p><span className="font-semibold">Localización:</span> {job.location}</p>
+                            <p><span className="font-semibold">Experiencia:</span> {job.experience_level}</p>
+                            <p><span className="font-semibold">Salario:</span>   {job.salary_min > 0 ? <>{job.salary_min} - {job.salary_max} {job.currency}</> : 'No indican salario'}</p>
+                            <p><span className="font-semibold">Publicado el:</span> {job.posted_at.toLocaleDateString("es-ES")}</p>
                             <div className="mt-6 flex flex-col gap-2">
-                                <h2 className="font-medium">Herramientas:</h2>
+                                <h2 className="font-semibold">Herramientas:</h2>
                                 <p>{job.tags.join(', ')}</p>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <h2 className="font-medium">Descripción del puesto:</h2>
+                                <h2 className="font-semibold">Descripción del puesto:</h2>
                                 <div
                                     className="prose prose-sm sm:prose lg:prose-lg max-w-full"
                                     dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job.description) }}
                                 />
                             </div>
                             <a href={job.url} target="_blank" rel="noopener noreferrer" className="shadow-[0_0_0_2px_var(--color-main)]
-  hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] lg:hover:-translate-y-1.5 transform focus:translate-0 lg:active:-translate-y-1 lg:active:shadow-[0_0_0_2px_var(--color-main),0_2px_0_2px_var(--color-main)] cursor-pointer px-4 py-2 rounded-2xl font-medium transition bg-whiteSpecial text-main w-full text-center duration-150 lg:hover:bg-amber-100">Solicitar</a>
+  hover:shadow-[0_0_0_2px_var(--color-main),0_4px_0_2px_var(--color-main)] lg:hover:-translate-y-1.5 transform focus:translate-0 lg:active:-translate-y-1 lg:active:shadow-[0_0_0_2px_var(--color-main),0_2px_0_2px_var(--color-main)] cursor-pointer px-4 py-2 rounded-2xl font-semibold transition bg-whiteSpecial text-main w-full text-center duration-150 lg:hover:bg-amber-100">Solicitar</a>
                         </div>
                     </motion.div>
                 )}
