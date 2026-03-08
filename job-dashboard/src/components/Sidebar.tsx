@@ -63,7 +63,7 @@ export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
                             {job.companyLogo && (
                                 <Image
                                     src={job.companyLogo}
-                                    alt={job.company}
+                                    alt={`Logo de ${job.company}`}
                                     width={45}
                                     height={45}
                                     className="rounded-md object-contain"
