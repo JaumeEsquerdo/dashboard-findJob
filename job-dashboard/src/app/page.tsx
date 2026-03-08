@@ -253,7 +253,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             onClick={scrollToTop}
-            className=" cursor-pointer fixed bottom-6.5 right-1/4 md:right-1/5 lg:right-1/4 lg:bottom-11 z-50 bg-amber-200 p-3 rounded-full shadow-lg lg:hover:scale-105 lg:active:scale-95 transition duration-150"
+            className=" cursor-pointer fixed bottom-6.5 left-4 sm:left-auto sm:right-1/4 md:right-1/5 lg:right-1/4 lg:bottom-11 z-50 bg-amber-200 p-3 rounded-full shadow-lg lg:hover:scale-105 lg:active:scale-95 transition duration-150"
           >
             <ArrowUp size={20} color="#7163ba" />
           </motion.button>
