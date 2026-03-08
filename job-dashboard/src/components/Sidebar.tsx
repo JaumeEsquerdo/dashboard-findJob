@@ -3,6 +3,7 @@ import Image from "next/image"
 import { useHelper } from "../context/useHelper"
 import { motion } from 'framer-motion'
 import DOMPurify from "dompurify"
+import { useEffect } from "react"
 
 interface sidebarProps {
     sidebarOpen: boolean
@@ -13,6 +14,29 @@ interface sidebarProps {
 
 export const Sidebar = ({ sidebarOpen, setOpen, job }: sidebarProps) => {
     const { step, startGuide } = useHelper()
+
+    /* logica para bloquear la pantalla si abre el sidebar y no está en desktop */
+    useEffect(() => {
+        const handleScrollLock = () => {
+            const isMobile = window.innerWidth < 1024
+
+            if (sidebarOpen && isMobile) {
+                document.body.style.overflow = "hidden"
+            } else {
+                document.body.style.overflow = "auto"
+            }
+        }
+
+        handleScrollLock() //cálculo inicial
+        window.addEventListener("resize", handleScrollLock)
+
+        /* cleanup */
+        return () => {
+            window.removeEventListener("resize", handleScrollLock)
+            document.body.style.overflow = "auto"
+        }
+    }, [sidebarOpen])
+
     return (
         <>
             {/* overlay clicable para cerrar sidebar */}
