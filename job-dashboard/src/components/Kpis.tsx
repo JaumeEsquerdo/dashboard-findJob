@@ -24,16 +24,14 @@ export const Kpis = ({ totalJobs, remotePercentage, avgSalary, variants }: Props
             <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
                 <div className="flex flex-col justify-between">
                     <p className="text-sm text-gray-600">Porcentaje trabajos remotos</p>
-                    <h3 className="text-3xl font-semibold text-textColor mt-2">{!isNaN(remotePercentage) && remotePercentage !== null
-                        ? remotePercentage + "%"
-                        : <span className="text-gray-500">0%</span>}</h3>
+                    <h3 className="text-3xl font-semibold text-textColor mt-2">{remotePercentage ? remotePercentage + "%" : <span className="text-gray-500">0%</span>}</h3>
                 </div>
                 <Image src="/icono-remoto.svg" alt="icono búsqueda trabajo" width={80} height={80} />
             </div>
             <div className="flex justify-between bg-whiteSpecial py-4 px-4 rounded-2xl shadow-md lg:px-6">
                 <div className="flex flex-col justify-between">
                     <p className="text-sm text-gray-600">Salario medio</p>
-                    <h3 className="text-3xl font-semibold text-textColor mt-2">  {!isNaN(avgSalary) && avgSalary !== null ? avgSalary.toLocaleString() + "€" : <span className="text-gray-500">0€</span>}
+                    <h3 className="text-3xl font-semibold text-textColor mt-2">{avgSalary ? avgSalary.toLocaleString() + "€" : <span className="text-gray-500">0€</span>}
                     </h3>
                 </div>
                 <Image src="/icono-salario.svg" alt="icono búsqueda trabajo" width={80} height={80} />
