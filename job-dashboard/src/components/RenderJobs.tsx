@@ -31,11 +31,15 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
 
     /* función para cambiar orden al clicar en la columna */
     const handleSort = (column: keyof Job) => {
-        /* si la columna ya está siendo ordenada cambia de dirección */
         if (sortBy === column) {
-            setSortDir(prev => prev === 'asc' ? 'desc' : 'asc')
+            if (sortDir === 'desc') {
+                // si ya estaba descendente, resetea
+                setSortBy(null) // indicamos que ninguna columna está activa
+                setSortDir('asc') // ponemos la dirección por defecto
+            } else {
+                setSortDir('desc')
+            }
         } else {
-            /* si no, actualiza la columna q se está ordenada y empieza en ascendente */
             setSortBy(column)
             setSortDir('asc')
         }
@@ -124,12 +128,30 @@ export const RenderJobs = ({ filteredJobs, setSelectedJob, setSidebarOpen, selec
                     <table className="min-w-full bg-white rounded-2xl">
                         <thead className="bg-background text-left ">
                             <tr >
-                                <th onClick={() => handleSort("title")} className="cursor-pointer p-4 rounded-tl-2xl ">Título</th>
-                                <th onClick={() => handleSort("company")} className="cursor-pointer p-4">Compañia</th>
-                                <th onClick={() => handleSort("location")} className="cursor-pointer p-4">Localización</th>
-                                <th onClick={() => handleSort("experience_level")} className="cursor-pointer p-4">Nivel</th>
-                                <th onClick={() => handleSort("remote")} className="cursor-pointer p-4">Remoto</th>
-                                <th onClick={() => handleSort("salary_min")} className="cursor-pointer p-4 rounded-tr-2xl">Salario</th>
+                                <th onClick={() => handleSort("title")} className="cursor-pointer p-4 rounded-tl-2xl whitespace-nowrap lg:hover:text-main lg:transition lg:duration-200">Título     <span className="inline-block w-3 text-center">
+                                    {sortBy === "title" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                                </span>
+                                </th>
+                                <th onClick={() => handleSort("company")} className="cursor-pointer p-4 whitespace-nowrap lg:hover:text-main lg:transition lg:duration-200">Compañia     <span className="inline-block w-3 text-center">
+                                    {sortBy === "company" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                                </span>
+                                </th>
+                                <th onClick={() => handleSort("location")} className="cursor-pointer p-4 whitespace-nowrap lg:hover:text-main lg:transition lg:duration-200">Localización     <span className="inline-block w-3 text-center">
+                                    {sortBy === "location" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                                </span>
+                                </th>
+                                <th onClick={() => handleSort("experience_level")} className="cursor-pointer p-4 whitespace-nowrap lg:hover:text-main lg:transition lg:duration-200">Nivel     <span className="inline-block w-3 text-center">
+                                    {sortBy === "experience_level" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                                </span>
+                                </th>
+                                <th onClick={() => handleSort("remote")} className="cursor-pointer p-4 whitespace-nowrap lg:hover:text-main lg:transition lg:duration-200">Remoto     <span className="inline-block w-3 text-center">
+                                    {sortBy === "remote" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                                </span>
+                                </th>
+                                <th onClick={() => handleSort("salary_min")} className="cursor-pointer p-4 rounded-tr-2xl whitespace-nowrap lg:hover:text-main lg:transition lg:duration-200">Salario     <span className="inline-block w-3 text-center">
+                                    {sortBy === "salary_min" ? (sortDir === "asc" ? "▲" : "▼") : ""}
+                                </span>
+                                </th>
                             </tr>
                         </thead>
 
