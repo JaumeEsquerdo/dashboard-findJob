@@ -232,7 +232,7 @@ export default function Home() {
           <FiltrosSelects variants={item} filters={filters} remoteJobsArray={remoteJobsArray} uniqueLocations={uniqueLocations} setFilters={setFilters} />
 
           {/* KPIS render */}
-          <Kpis variants={item} avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
+          <Kpis loading={loading} variants={item} avgSalary={avgSalary} totalJobs={totalJobs} remotePercentage={remotePercentage} />
 
 
           {/* MÉTRICAS */}
