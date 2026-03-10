@@ -196,12 +196,10 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-full  lg:flex-row gap-6 overflow-x-hidden">
+    <div className="flex flex-col flex-1 min-h-0 rounded-2xl lg:flex-row gap-6 overflow-x-hidden">
       <LayoutGroup>
         <motion.main ref={mainRef}
-          variants={container} initial={'hidden'} animate='show' className=" relative flex flex-col flex-1 min-h-full bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
-
-
+          variants={container} initial={'hidden'} animate='show' className=" relative flex flex-col flex-1 min-h-0 bg-fondoColor w-full p-4 rounded-2xl gap-4 overflow-y-auto scrollbar-hidden overflow-x-hidden">
 
           <header className="flex flex-col justify-between items-center gap-4 lg:flex-row">
             <h2 className="font-medium text-4xl text-textColor font-heading">Dashboard</h2>

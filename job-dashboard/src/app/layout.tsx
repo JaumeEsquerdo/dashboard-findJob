@@ -54,7 +54,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${ubuntu.variable} ${manrope.variable}`}>
       <body
-        className={`p-4 flex flex-col h-screen overflow-auto gap-6 bg-background font-sans antialiased lg:flex-row`}
+        className={`p-4 flex flex-col h-screen overflow-hidden gap-6 bg-background font-sans antialiased lg:flex-row`}
       >
         <HelperProvider>
           <ScrollProvider>
