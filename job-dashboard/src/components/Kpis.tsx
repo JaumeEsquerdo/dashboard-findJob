@@ -23,7 +23,7 @@ export const Kpis = ({ totalJobs, remotePercentage, avgSalary, variants, loading
                         {loading ? (
                             <Loader2 className="animate-spin w-6 h-6 text-gray-500" />
                         ) : (
-                            totalJobs ?? <span className="text-gray-500">0</span>
+                            totalJobs || <span className="text-gray-500">0</span>
                         )}
                     </h3>
                 </div>
