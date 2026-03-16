@@ -15,7 +15,7 @@ export const ApiJobSchema = z.object({
   title: z.string(),
   mainCategory: z.string(),
   companyName: z.string(),
-  companyLogo: z.string().url().nullable().optional(),
+  companyLogo: z.string().url().nullable().optional().or(z.literal("")),
   jobType: z.string(),
   workModel: z.string(),
   seniorityLevel: z.string(),
