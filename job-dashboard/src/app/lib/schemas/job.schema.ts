@@ -15,7 +15,19 @@ export const ApiJobSchema = z.object({
   title: z.string(),
   mainCategory: z.string(),
   companyName: z.string(),
-  companyLogo: z.string().url().nullable().optional().or(z.literal("")),
+  companyLogo: z
+    .string()
+    .refine(
+      (val) =>
+        val === "" || // cadena vacía
+        val === null || // null
+        val === undefined || // undefined (por optional)
+        /^https?:\/\//.test(val) || // URL válida
+        val.startsWith("/"), // ruta relativa
+      { message: "Invalid logo path" },
+    )
+    .nullable()
+    .optional(),
   jobType: z.string(),
   workModel: z.string(),
   seniorityLevel: z.string(),
@@ -30,6 +42,9 @@ export const ApiJobSchema = z.object({
   applicationLink: z.string().url(),
   guid: z.string().url(),
 });
+/*
+.refine() permite poner cualquier regla de validación que no exista en Zod por defecto
+ */
 
 /**
  * Schema que define la estructura de la respuesta COMPLETA de la API.
